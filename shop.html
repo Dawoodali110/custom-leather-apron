@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shop All Aprons — Custom Leather Apron</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/site.js" defer></script>
+</head>
+<body data-page="shop">
+<div id="site-header"></div>
+<main class="wrap" style="padding-bottom:104px">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span aria-hidden="true">›</span><span style="color:var(--ink)">Shop</span></nav>
+  <div style="text-align:center;padding:32px 0 48px">
+    <h1 style="font-size:48px;margin-bottom:8px">Shop All Aprons</h1>
+    <p style="margin:0;color:var(--muted)">Explore our full range of handcrafted leather aprons.</p>
+  </div>
+  <div class="shop-layout">
+    <aside class="filters" aria-label="Filters">
+      <div><h3>Categories</h3><div id="cats"></div></div>
+      <div><h3>Leather Color</h3>
+        <div id="colors" style="display:flex;gap:10px">
+          <button type="button" class="swatch" data-color="brown" aria-label="Brown" style="background:#7A3E1C"></button>
+          <button type="button" class="swatch" data-color="black" aria-label="Black" style="background:#1E1915"></button>
+          <button type="button" class="swatch" data-color="tan" aria-label="Tan" style="background:#B86A2E"></button>
+          <button type="button" class="swatch" data-color="olive" aria-label="Olive" style="background:#5B5A3A"></button>
+        </div>
+      </div>
+      <div><h3><label for="price">Price</label></h3>
+        <input id="price" type="range" min="50" max="300" step="10" value="300" style="width:100%;accent-color:#8E4B22">
+        <div style="display:flex;justify-content:space-between;font-size:14px;color:var(--muted)"><span>$50</span><span id="price-out">$300</span></div>
+      </div>
+    </aside>
+    <section style="flex:999 1 560px;min-width:0">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:24px">
+        <div style="color:var(--muted);font-size:15px" aria-live="polite">Showing <span id="shown">0</span> aprons</div>
+        <label style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)">Sort by
+          <select id="sort" class="input" style="height:40px;font-size:14px"><option value="pop">Popular</option><option value="new">Newest</option><option value="low">Price: Low to High</option><option value="high">Price: High to Low</option></select>
+        </label>
+      </div>
+      <div class="grid" id="shop-grid" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr))"></div>
+    </section>
+  </div>
+</main>
+<div id="site-footer"></div>
+</body>
+</html>

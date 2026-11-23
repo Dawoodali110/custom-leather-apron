@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Classic Leather Apron — Custom Leather Apron</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/site.js" defer></script>
+</head>
+<body data-page="customize">
+<div id="site-header"></div>
+<main class="wrap" style="padding-bottom:104px">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span aria-hidden="true">›</span><a href="shop.html">Shop</a><span aria-hidden="true">›</span><span id="p-crumb" style="color:var(--ink)"></span></nav>
+  <div class="pdp">
+    <div class="gallery">
+      <div class="thumbs" id="p-thumbs"></div>
+      <div class="main-img" id="p-main"></div>
+    </div>
+    <div class="buybox">
+      <div>
+        <h1 id="p-name" style="font-size:42px;margin-bottom:8px"></h1>
+        <div style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted)"><span class="stars" aria-hidden="true">★★★★★</span><span id="p-reviews"></span></div>
+        <div id="p-price" style="font-size:30px;font-weight:700;margin-top:10px"></div>
+      </div>
+      <p id="p-desc" style="margin:0;color:#4A3F37"></p>
+      <div>
+        <div style="font-weight:600;margin-bottom:10px">Color: <span id="p-color" style="font-weight:400"></span></div>
+        <div id="p-swatches" style="display:flex;gap:12px"></div>
+      </div>
+      <label class="field" style="font-size:16px;font-weight:600">Personalization (Optional)
+        <input id="p-text" class="input" type="text" maxlength="16" placeholder="Add name, logo, or text (+$15)">
+      </label>
+      <div>
+        <div style="font-weight:600;margin-bottom:8px">Quantity:</div>
+        <div class="qty"><button type="button" id="p-dec" aria-label="Decrease quantity">−</button><span id="p-qty" aria-live="polite">1</span><button type="button" id="p-inc" aria-label="Increase quantity">+</button></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <button type="button" id="p-add" class="btn btn-primary"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.6 12.4a1 1 0 0 0 1 .8h9.7a1 1 0 0 0 1-.8L21 7H6"/></svg> Add to Cart</button>
+        <button type="button" id="p-buy" class="btn btn-outline-dark">Buy Now</button>
+      </div>
+    </div>
+  </div>
+  <section style="margin-top:64px">
+    <div class="tabs" role="tablist">
+      <button type="button" role="tab" data-tab="desc">Description</button>
+      <button type="button" role="tab" data-tab="spec">Specifications</button>
+      <button type="button" role="tab" data-tab="rev" id="tab-rev">Reviews</button>
+    </div>
+    <div style="padding:28px 0;max-width:820px;color:#4A3F37">
+      <div data-panel="desc"><p style="margin:0">Handcrafted from premium full-grain leather, this apron offers lasting durability, a comfortable fit, and a classic look for any craft. Adjustable neck strap, long waist ties, riveted front pockets and solid brass hardware.</p></div>
+      <div data-panel="spec" class="hidden" style="display:grid;grid-template-columns:200px minmax(0,1fr);gap:10px 24px">
+        <b style="color:var(--ink)">Material</b><span>Full-grain leather</span>
+        <b style="color:var(--ink)">Hardware</b><span>Solid brass rivets and buckles</span>
+        <b style="color:var(--ink)">Fit</b><span>Adjustable neck strap, long waist ties</span>
+        <b style="color:var(--ink)">Care</b><span>Wipe clean, condition every few months</span>
+      </div>
+      <div data-panel="rev" class="hidden"><p style="margin:0">Customer reviews will appear here once your store is connected to a review service.</p></div>
+    </div>
+  </section>
+</main>
+<div id="site-footer"></div>
+</body>
+</html>
