@@ -9,10 +9,11 @@
     tan: { name: 'Tan', hex: '#B86A2E', dark: '#6E3A16' },
     cognac: { name: 'Cognac', hex: '#9A5528', dark: '#5A2F17' },
     chocolate: { name: 'Chocolate', hex: '#5C3420', dark: '#311A0E' },
-    olive: { name: 'Olive', hex: '#6B6A45', dark: '#3A3922' }
+    olive: { name: 'Olive', hex: '#556131', dark: '#2F3719' },
+    oxblood: { name: 'Oxblood', hex: '#8A2A18', dark: '#4E140A' }
   };
   var PRODUCTS = [
-    { id: 'classic', name: 'Classic Leather Apron', price: 119, reviews: 128, color: 'brown', colors: ['brown'], photo: 'assets/img/product-classic.webp', cat: 'chef', tags: ['best', 'custom', 'top'], desc: 'A timeless full-grain leather bib with cross-back straps, brass buckles, a deep double front pocket, a towel ring and reinforced corners — built for chefs, makers and everyday professionals.' },
+    { id: 'classic', name: 'Classic Leather Apron', price: 119, reviews: 128, color: 'brown', colors: ['brown', 'black', 'tan', 'oxblood', 'olive'], photos: { brown: 'assets/img/product-classic-brown.webp', black: 'assets/img/product-classic-black.webp', tan: 'assets/img/product-classic-tan.webp', oxblood: 'assets/img/product-classic-oxblood.webp', olive: 'assets/img/product-classic-olive.webp' }, cat: 'chef', tags: ['best', 'custom', 'top'], desc: 'A timeless full-grain leather bib with cross-back straps, brass buckles, a deep double front pocket, a towel ring and reinforced corners — built for chefs, makers and everyday professionals.' },
     { id: 'barber', name: 'Barber Leather Apron', price: 129, reviews: 94, color: 'black', colors: ['black'], photo: 'assets/img/product-barber.webp', cat: 'barber', tags: ['best', 'new', 'custom'], desc: 'Black full-grain leather with tan cross-back straps, slim clipper and trimmer sleeves, shear and comb pockets, and the embossed Barber patch.' },
     { id: 'workshop', name: 'Workshop Leather Apron', price: 139, reviews: 76, color: 'black', colors: ['black'], photo: 'assets/img/product-workshop.webp', cat: 'workshop', tags: ['best', 'new', 'top'], desc: 'Waxed-canvas body with full-grain leather tool pockets, a hammer loop, pencil holder, towel ring and reinforced corners — made for woodworkers and makers.' },
     { id: 'chefpro', name: 'Chef Pro Apron', price: 149, reviews: 67, color: 'brown', colors: ['brown', 'black'], photos: { brown: 'assets/img/product-chefpro-brown.webp', black: 'assets/img/product-chefpro-black.webp' }, cat: 'chef', tags: ['best', 'custom', 'top', 'new'], desc: 'Our heaviest full-bib chef apron: cross-back straps, deep utensil pockets, a knife sleeve, towel ring and the embossed Chef Collection patch.' },
@@ -198,7 +199,7 @@
     var max = 300;
     function list() {
       return PRODUCTS.filter(function (p) {
-        return (cur === 'all' || p.cat === cur) && (!color || p.color === color || (color === 'brown' && /cognac|chocolate|brown/.test(p.color))) && (p.price == null || p.price <= max);
+        return (cur === 'all' || p.cat === cur) && (!color || p.color === color || (p.colors && p.colors.indexOf(color) !== -1) || (color === 'brown' && /cognac|chocolate|brown/.test(p.color))) && (p.price == null || p.price <= max);
       });
     }
     function draw() {
@@ -253,7 +254,7 @@
           $('#p-thumbs').innerHTML = swatches.map(function (id) {
             var on = id === st.color && st.view === 0;
             return '<button type="button" aria-label="' + COLORS[id].name + ' apron" data-thumbcolor="' + id + '" class="' + (on ? 'on' : '') + '" style="overflow:hidden"><img src="' + photoOf(p, id) + '" alt="" style="width:100%;height:100%;object-fit:contain"></button>';
-          }).join('') + VIEWS.slice(1, 3).map(function (x, i) { return zoomThumb(x, i + 1); }).join('');
+          }).join('') + (swatches.length > 3 ? '' : VIEWS.slice(1, 3).map(function (x, i) { return zoomThumb(x, i + 1); }).join(''));
         } else {
           $('#p-thumbs').innerHTML = VIEWS.map(zoomThumb).join('');
         }
