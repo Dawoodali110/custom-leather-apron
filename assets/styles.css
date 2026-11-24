@@ -208,3 +208,11 @@ textarea.input{height:auto;padding:12px 14px;resize:vertical}
 .ph-patch-bg{position:absolute;inset:0}
 .ph-patch-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 10%;font-family:var(--serif);font-weight:700;color:#E9C58E;letter-spacing:.02em;line-height:1;text-shadow:0 1px 0 rgba(0,0,0,.45)}
 @media (max-width:600px){#spin{padding:0 14px!important;font-size:14px!important;white-space:nowrap}}
+
+/* Photo collection cards */
+.collections.photo{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.collection-photo{display:block;border-radius:12px;overflow:hidden;background:#16120F;aspect-ratio:742/488;box-shadow:0 1px 0 rgba(0,0,0,.04)}
+.collection-photo img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.collection-photo:hover img{transform:scale(1.04)}
+.collection-photo:focus-visible{outline:3px solid var(--cognac);outline-offset:3px}
+@media (max-width:640px){.collections.photo{grid-template-columns:1fr}}
