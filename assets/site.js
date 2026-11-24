@@ -14,9 +14,9 @@
   var PRODUCTS = [
     { id: 'classic', name: 'Classic Leather Apron', price: 119, reviews: 128, color: 'cognac', cat: 'chef', tags: ['best', 'custom', 'top'], desc: 'A timeless, full-grain leather apron built for chefs, makers, and everyday professionals.' },
     { id: 'barber', name: 'Barber Leather Apron', price: 129, reviews: 94, color: 'black', cat: 'barber', tags: ['best', 'new', 'custom'], desc: 'Lightweight and sleek, with pockets sized for clippers, combs and shears.' },
-    { id: 'workshop', name: 'Workshop Leather Apron', price: 139, reviews: 76, color: 'tan', cat: 'workshop', tags: ['best', 'new', 'top'], desc: 'Cross-back straps and deep tool pockets for woodworkers and makers.' },
+    { id: 'workshop', name: 'Workshop Leather Apron', price: 139, reviews: 76, color: 'black', colors: ['black'], photo: 'assets/img/product-workshop.webp', cat: 'workshop', tags: ['best', 'new', 'top'], desc: 'Waxed-canvas body with full-grain leather tool pockets, a hammer loop, pencil holder, towel ring and reinforced corners — made for woodworkers and makers.' },
     { id: 'chefpro', name: 'Chef Pro Apron', price: 149, reviews: 67, color: 'chocolate', cat: 'chef', tags: ['best', 'custom', 'top', 'new'], desc: 'Our heaviest full-bib apron with a towel loop and reinforced pockets.' },
-    { id: 'artist', name: 'Artist Studio Apron', price: null, reviews: 0, color: 'olive', cat: 'artist', tags: ['new'], desc: 'Paint- and clay-friendly leather with wide brush pockets.' },
+    { id: 'artist', name: 'Artist Studio Apron', price: null, reviews: 0, color: 'brown', colors: ['brown'], photo: 'assets/img/product-artist.webp', cat: 'artist', tags: ['new'], desc: 'Paint-friendly full-grain leather with wide brush pockets, a palette-knife slot, a towel ring and reinforced corners.' },
     { id: 'bbq', name: 'BBQ Pitmaster Apron', price: null, reviews: 0, color: 'black', cat: 'bbq', tags: ['new', 'custom'], desc: 'Heat-resistant bib with a D-ring for tongs and a rugged finish.' }
   ];
   var CATS = [
@@ -170,7 +170,7 @@
   function card(p) {
     var c = COLORS[p.color];
     return '<a class="card" href="product.html?id=' + p.id + '">' +
-      '<div class="img"><span class="heart">' + icon('heart', 22) + '</span>' + apron(c.hex, c.dark) + '</div>' +
+      '<div class="img"><span class="heart">' + icon('heart', 22) + '</span>' + (p.photo ? '<img class="card-photo" src="' + p.photo + '" alt="' + esc(p.name) + '" loading="lazy">' : apron(c.hex, c.dark)) + '</div>' +
       '<div><div class="name">' + esc(p.name) + '</div>' +
       '<div class="meta"><span class="stars" aria-hidden="true">★★★★★</span>' + (p.reviews ? '(' + p.reviews + ')' : 'New') + '</div>' +
       '<div class="price">' + money(p.price) + '</div></div></a>';
@@ -227,7 +227,8 @@
 
   function initProduct() {
     var p = product(new URLSearchParams(location.search).get('id')) || PRODUCTS[0];
-    var swatches = ['brown', 'black', 'tan'];
+    var swatches = p.colors || ['brown', 'black', 'tan'];
+    var VIEWS = [['Front view', '1', '50% 50%'], ['Logo patch detail', '2.3', '50% 20%'], ['Pocket detail', '1.9', '50% 55%'], ['Corner and stitching detail', '2.6', '12% 92%']];
     var st = { color: swatches.indexOf(p.color) !== -1 ? p.color : 'brown', qty: 1, text: '', view: 0, tab: 'desc' };
     document.title = p.name + ' — Custom Leather Apron';
     $('#p-name').textContent = p.name; $('#p-crumb').textContent = p.name;
@@ -239,10 +240,18 @@
       var c = COLORS[st.color];
       $('#p-price').textContent = money(price());
       $('#p-color').textContent = c.name;
-      $('#p-main').innerHTML = apron(c.hex, c.dark, { label: p.name + ' in ' + c.name, text: st.text });
-      $('#p-thumbs').innerHTML = ['Front view', 'Back view', 'Hardware detail', 'Leather detail'].map(function (l, i) {
-        return '<button type="button" aria-label="' + l + '" data-view="' + i + '" class="' + (i === st.view ? 'on' : '') + '">' + apron(c.hex, c.dark, { mini: true }) + '</button>';
-      }).join('');
+      if (p.photo) {
+        var v = VIEWS[st.view];
+        $('#p-main').innerHTML = '<img class="pdp-photo" src="' + p.photo + '" alt="' + esc(p.name) + ', ' + v[0].toLowerCase() + '" style="transform:scale(' + v[1] + ');transform-origin:' + v[2] + '">';
+        $('#p-thumbs').innerHTML = VIEWS.map(function (x, i) {
+          return '<button type="button" aria-label="' + x[0] + '" data-view="' + i + '" class="' + (i === st.view ? 'on' : '') + '" style="overflow:hidden"><img src="' + p.photo + '" alt="" style="width:100%;height:100%;object-fit:contain;transform:scale(' + x[1] + ');transform-origin:' + x[2] + '"></button>';
+        }).join('');
+      } else {
+        $('#p-main').innerHTML = apron(c.hex, c.dark, { label: p.name + ' in ' + c.name, text: st.text });
+        $('#p-thumbs').innerHTML = ['Front view', 'Back view', 'Hardware detail', 'Leather detail'].map(function (l, i) {
+          return '<button type="button" aria-label="' + l + '" data-view="' + i + '" class="' + (i === st.view ? 'on' : '') + '">' + apron(c.hex, c.dark, { mini: true }) + '</button>';
+        }).join('');
+      }
       $('#p-swatches').innerHTML = swatches.map(function (id) {
         return '<button type="button" class="swatch' + (id === st.color ? ' on' : '') + '" aria-pressed="' + (id === st.color) + '" aria-label="' + COLORS[id].name + '" data-color="' + id + '" style="background:' + COLORS[id].hex + '"></button>';
       }).join('');
