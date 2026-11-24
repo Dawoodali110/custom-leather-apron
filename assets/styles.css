@@ -216,3 +216,8 @@ textarea.input{height:auto;padding:12px 14px;resize:vertical}
 .collection-photo:hover img{transform:scale(1.04)}
 .collection-photo:focus-visible{outline:3px solid var(--cognac);outline-offset:3px}
 @media (max-width:640px){.collections.photo{grid-template-columns:1fr}}
+.collection-photo.labeled{position:relative}
+.collection-photo.labeled::after{content:"";position:absolute;inset:auto 0 0 0;height:45%;background:linear-gradient(to top,rgba(10,7,5,.85),rgba(10,7,5,0));pointer-events:none}
+.collection-photo .cp-label{position:absolute;left:3.6%;bottom:6.5%;z-index:1;color:#FFFFFF;font-family:Georgia,"Times New Roman",serif;font-weight:600;font-size:clamp(20px,2.9vw,42px);line-height:1;letter-spacing:-.01em;text-shadow:0 2px 8px rgba(0,0,0,.5)}
+.collection-photo .cp-arrow{position:absolute;right:3.4%;bottom:6.5%;z-index:1;color:#FFFFFF;display:flex}
+@media (max-width:640px){.collection-photo .cp-label{font-size:clamp(22px,7.5vw,34px)}}
