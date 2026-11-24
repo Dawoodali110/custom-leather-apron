@@ -10,7 +10,8 @@ document.addEventListener('DOMContentLoaded', function () {
     { id: 'dark', name: 'Dark Brown', hex: '#4A2A18', dark: '#24130A' },
     { id: 'black', name: 'Black', hex: '#221C18', dark: '#0E0B09' },
     { id: 'olive', name: 'Olive', hex: '#4B5230', dark: '#262A16' },
-    { id: 'navy', name: 'Navy', hex: '#2C3A4A', dark: '#141C25' }
+    { id: 'navy', name: 'Navy', hex: '#2C3A4A', dark: '#141C25' },
+    { id: 'burgundy', name: 'Burgundy', hex: '#7E1F1C', dark: '#45100E' }
   ];
   var FINISHES = [
     { id: 'matte', label: 'Classic Matte', fill: '#000', op: 0 },
@@ -43,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
     { prompt: 'A premium apron with my logo', label: 'CUSTOM', img: 'custom', title: 'Custom Logo Apron', color: 'black', finish: 'polished', style: 'crossback', icon: 'M12 3l2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9z' }
   ];
 
-  var st = { d: { color: 'cognac', finish: 'matte', style: 'crossback', text: '', photo: null }, past: [], future: [], tab: 'customize', details: { brass: true, pens: true }, spin: false };
+  var st = { d: { color: 'cognac', finish: 'matte', style: 'crossback', text: '', photo: 'brown' }, past: [], future: [], tab: 'customize', details: { brass: true, pens: true }, spin: false };
   function find(arr, id) { return arr.filter(function (x) { return x.id === id; })[0] || arr[0]; }
   function commit(ch) {
     st.past.push(Object.assign({}, st.d)); if (st.past.length > 30) st.past.shift();
@@ -86,19 +87,25 @@ document.addEventListener('DOMContentLoaded', function () {
     barber: { src: 'assets/img/apron-barber.jpg', patch: [36.1, 26.6, 28, 13.2], bg: '#1F1B18', baked: 'BARBER' },
     workshop: { src: 'assets/img/apron-workshop.jpg', patch: [36.5, 24.1, 27.4, 11.9], bg: '#1F1B18', baked: 'WORKSHOP' },
     bbq: { src: 'assets/img/apron-bbq.jpg', patch: [35.4, 24.3, 29.8, 15.8], bg: '#1F1B18', baked: 'BBQ MASTER' },
-    custom: { src: 'assets/img/apron-custom.jpg', patch: [37, 22.3, 26, 5.6], bg: '#1F1B18', baked: '' }
+    custom: { src: 'assets/img/apron-custom.jpg', patch: [37, 22.3, 26, 5.6], bg: '#1F1B18', baked: '' },
+    logo_cognac: { src: 'assets/img/ai-logo-cognac.webp', patch: [34.5, 19.9, 30.7, 16.6], bg: '#9A4A1F', baked: 'YOUR LOGO', ar: '1086/1448', tint: true },
+    logo_dark: { src: 'assets/img/ai-logo-dark.webp', patch: [34.5, 19.9, 30.7, 16.6], bg: '#4A1C10', baked: 'YOUR LOGO', ar: '1086/1448' },
+    logo_black: { src: 'assets/img/ai-logo-black.webp', patch: [34.5, 19.9, 30.7, 16.6], bg: '#171412', baked: 'YOUR LOGO', ar: '1086/1448' },
+    logo_olive: { src: 'assets/img/ai-logo-olive.webp', patch: [34.5, 19.9, 30.7, 16.6], bg: '#3F4A1E', baked: 'YOUR LOGO', ar: '1086/1448' },
+    logo_burgundy: { src: 'assets/img/ai-logo-burgundy.webp', patch: [34.5, 19.9, 30.7, 16.6], bg: '#6E1712', baked: 'YOUR LOGO', ar: '1086/1448' }
   };
-  var COLOR_FILTER = { cognac: '', chestnut: 'brightness(.86) saturate(1.05)', dark: 'brightness(.55) saturate(.9)', olive: 'hue-rotate(42deg) saturate(.55) brightness(.72)', navy: 'hue-rotate(185deg) saturate(.45) brightness(.6)', black: '' };
+  var COLOR_FILTER = { chestnut: 'brightness(.8) saturate(1.05)', navy: 'hue-rotate(185deg) saturate(.45) brightness(.6)' };
+  var COLOR_PHOTO = { cognac: 'logo_cognac', chestnut: 'logo_cognac', navy: 'logo_cognac', dark: 'logo_dark', black: 'logo_black', olive: 'logo_olive', burgundy: 'logo_burgundy' };
   var FINISH_FILTER = { matte: '', vintage: 'contrast(1.1) sepia(.18)', waxed: 'saturate(1.2) contrast(1.05)', polished: 'brightness(1.07) contrast(1.08)' };
   function photoKey(d) {
     if (d.style !== 'crossback') return null;
     if (d.photo) return d.photo;
-    return d.color === 'black' ? 'custom' : 'brown';
+    return COLOR_PHOTO[d.color] || 'logo_cognac';
   }
   function photoState(d) {
     var k = photoKey(d); if (!k) return null;
     var P = PHOTOS[k], t = (d.text || '').toUpperCase().trim();
-    var filt = (k === 'brown' ? COLOR_FILTER[d.color] || '' : '') + ' ' + (FINISH_FILTER[d.finish] || '');
+    var filt = (P.tint ? COLOR_FILTER[d.color] || '' : '') + ' ' + (FINISH_FILTER[d.finish] || '');
     filt = filt.trim();
     var show = !!t && t !== P.baked;
     var fs = Math.min(3.6, P.patch[2] * 1.55 / Math.max(t.length, 4), P.patch[3] * 1.5 * 0.55);
@@ -107,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function previewPhoto(d, aria) {
     var s = photoState(d), P = s.P, r = P.patch;
     var rivet = function (x, y) { return '<span style="position:absolute;' + x + ':5%;' + y + ':9%;width:5%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 35%,#F3D58A,#A87C2C)"></span>'; };
-    return '<div class="ph-wrap" style="' + (st.spin ? 'transform:rotateY(360deg)' : '') + '">' +
+    return '<div class="ph-wrap" style="' + (P.ar ? 'aspect-ratio:' + P.ar + ';' : '') + (st.spin ? 'transform:rotateY(360deg)' : '') + '">' +
       '<img src="' + P.src + '" alt="' + esc(aria) + '" style="' + (s.filt ? 'filter:' + s.filt : '') + '">' +
       (s.show ? '<div class="ph-patch" style="left:' + r[0] + '%;top:' + r[1] + '%;width:' + r[2] + '%;height:' + r[3] + '%">' +
         '<span class="ph-patch-bg" style="background:' + P.bg + (s.filt ? ';filter:' + s.filt : '') + '"></span>' +
@@ -151,10 +158,21 @@ document.addEventListener('DOMContentLoaded', function () {
         '<svg aria-hidden="true" width="30" height="34" viewBox="0 -24 200 264" fill="none" stroke="currentColor" stroke-width="10" stroke-linejoin="round"><path d="' + x.strap + '"/><path d="' + x.body + '"/></svg>' + x.label + '</button>';
     }).join('');
     var vk = photoKey(d);
-    $('#variants').innerHTML = [['cognac', 'brown', ''], ['dark', 'brown', COLOR_FILTER.dark], ['black', 'custom', '']].map(function (v) {
-      var x = find(COLORS, v[0]), on = vk && !d.photo && v[0] === d.color;
-      return '<button type="button" data-variant="' + v[0] + '" aria-label="' + x.name + ' crossback apron" style="height:76px;border-radius:8px;background:#FFFFFF;cursor:pointer;padding:3px;overflow:hidden;border:' + (on ? '2px solid #D07A34' : '1px solid #4A3A2E') + '"><img src="' + PHOTOS[v[1]].src + '" alt="" style="width:100%;height:100%;object-fit:contain' + (v[2] ? ';filter:' + v[2] : '') + '"></button>';
-    }).join('') + '<button type="button" id="add-variant" aria-label="Random variant" style="height:64px;border:1px solid #4A3A2E;border-radius:8px;background:transparent;color:#F4EFE8;font-size:24px;cursor:pointer">+</button>';
+    var VARIANTS = [
+      { photo: 'brown', color: 'cognac', label: 'Original brown apron with tools' },
+      { photo: null, color: 'cognac', label: 'Cognac apron' },
+      { photo: null, color: 'dark', label: 'Dark brown apron' },
+      { photo: null, color: 'black', label: 'Black apron' },
+      { photo: null, color: 'olive', label: 'Olive apron' },
+      { photo: null, color: 'burgundy', label: 'Burgundy apron' }
+    ];
+    var curKey = photoKey(d);
+    $('#variants').innerHTML = VARIANTS.map(function (v, i) {
+      var key = v.photo || COLOR_PHOTO[v.color];
+      var on = curKey === key && (v.photo ? d.photo === v.photo : !d.photo && d.color === v.color);
+      return '<button type="button" data-variant="' + i + '" aria-label="' + v.label + '" aria-pressed="' + on + '" style="height:66px;border-radius:8px;background:#FFFFFF;cursor:pointer;padding:3px;overflow:hidden;border:' + (on ? '2px solid #D07A34' : '1px solid #4A3A2E') + '"><img src="' + PHOTOS[key].src + '" alt="" style="width:100%;height:100%;object-fit:contain"></button>';
+    }).join('') + '<button type="button" id="add-variant" aria-label="Random variant" style="height:56px;border:1px solid #4A3A2E;border-radius:8px;background:transparent;color:#F4EFE8;font-size:24px;cursor:pointer">+</button>';
+    st.VARIANTS = VARIANTS;
     $('#ai-tabs').innerHTML = TABS.map(function (t) {
       return '<button type="button" role="tab" data-tab="' + t.id + '" aria-selected="' + (t.id === st.tab) + '" class="ai-tab' + (t.id === st.tab ? ' on' : '') + '"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="' + t.icon + '"/></svg>' + t.label + '</button>';
     }).join('');
@@ -170,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function () {
   document.addEventListener('click', function (e) {
     var b = e.target.closest('button'); if (!b) return;
     if (b.hasAttribute('data-color')) commit({ color: b.getAttribute('data-color'), photo: null });
-    else if (b.hasAttribute('data-variant')) commit({ color: b.getAttribute('data-variant'), style: 'crossback', photo: null });
+    else if (b.hasAttribute('data-variant')) { var vv = st.VARIANTS[+b.getAttribute('data-variant')]; commit({ color: vv.color, style: 'crossback', photo: vv.photo }); }
     else if (b.hasAttribute('data-finish')) commit({ finish: b.getAttribute('data-finish') });
     else if (b.hasAttribute('data-style')) commit({ style: b.getAttribute('data-style'), photo: null });
     else if (b.hasAttribute('data-tab')) { st.tab = b.getAttribute('data-tab'); draw(); }
@@ -194,7 +212,10 @@ document.addEventListener('DOMContentLoaded', function () {
   });
   $('#undo').addEventListener('click', function () { if (!st.past.length) return; st.future.unshift(Object.assign({}, st.d)); st.d = st.past.pop(); draw(); });
   $('#redo').addEventListener('click', function () { if (!st.future.length) return; st.past.push(Object.assign({}, st.d)); st.d = st.future.shift(); draw(); });
-  $('#personal').addEventListener('change', function () { commit({ text: this.value.trim() }); });
+  var textBefore = null;
+  $('#personal').addEventListener('focus', function () { textBefore = st.d.text; });
+  // record one undo step per edit without re-rendering (a re-render here would swallow the next click)
+  $('#personal').addEventListener('change', function () { if (textBefore !== null && textBefore !== st.d.text) { var prev = Object.assign({}, st.d, { text: textBefore }); st.past.push(prev); st.future = []; } textBefore = st.d.text; });
   $('#personal').addEventListener('input', function () { st.d.text = this.value.trim(); draw(); });
   $('#spin').addEventListener('click', function () { st.spin = !st.spin; draw(); });
   $('#fs').addEventListener('click', function () { var el = $('#preview').parentElement; if (el.requestFullscreen) el.requestFullscreen(); });
