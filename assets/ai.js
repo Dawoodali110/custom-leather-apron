@@ -36,11 +36,11 @@ document.addEventListener('DOMContentLoaded', function () {
   ];
   var DETAILS = [['brass', 'Solid brass hardware'], ['towel', 'Towel loop'], ['pens', 'Pen & tool pockets'], ['ring', 'D-ring for tongs']];
   var PRESETS = [
-    { prompt: 'Chef’s apron with large pockets', label: 'CHEF', color: 'cognac', finish: 'vintage', style: 'classic', icon: 'M7 10a4 4 0 1 1 2.5-7 4 4 0 0 1 5 0A4 4 0 1 1 17 10v4H7z M7 17h10' },
-    { prompt: 'Barber-style apron with a modern look', label: 'BARBER', color: 'black', finish: 'polished', style: 'crossback', icon: 'M9 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0z M8.5 7.5L20 18 M8.5 16.5L20 6' },
-    { prompt: 'Workshop apron with tool holders', label: 'WORKSHOP', color: 'dark', finish: 'waxed', style: 'crossback', icon: 'M3 21l9-9 M10 6l4-4 6 6-4 4z' },
-    { prompt: 'BBQ apron with a rugged design', label: 'BBQ MASTER', color: 'black', finish: 'vintage', style: 'bib', icon: 'M12 3c1 3 4 4 4 8a4 4 0 0 1-8 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-4 0-7z' },
-    { prompt: 'A premium apron with my logo', label: 'CUSTOM', color: 'chestnut', finish: 'polished', style: 'classic', icon: 'M12 3l2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9z' }
+    { prompt: 'Chef’s apron with large pockets', label: 'CHEF', img: 'chef', title: 'Chef Apron', color: 'black', finish: 'vintage', style: 'crossback', icon: 'M7 10a4 4 0 1 1 2.5-7 4 4 0 0 1 5 0A4 4 0 1 1 17 10v4H7z M7 17h10' },
+    { prompt: 'Barber-style apron with a modern look', label: 'BARBER', img: 'barber', title: 'Barber Apron', color: 'black', finish: 'polished', style: 'crossback', icon: 'M9 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0z M8.5 7.5L20 18 M8.5 16.5L20 6' },
+    { prompt: 'Workshop apron with tool holders', label: 'WORKSHOP', img: 'workshop', title: 'Workshop Apron', color: 'black', finish: 'waxed', style: 'crossback', icon: 'M3 21l9-9 M10 6l4-4 6 6-4 4z' },
+    { prompt: 'BBQ apron with a rugged design', label: 'BBQ MASTER', img: 'bbq', title: 'BBQ Apron', color: 'black', finish: 'vintage', style: 'crossback', icon: 'M12 3c1 3 4 4 4 8a4 4 0 0 1-8 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-4 0-7z' },
+    { prompt: 'A premium apron with my logo', label: 'CUSTOM', img: 'custom', title: 'Custom Logo Apron', color: 'black', finish: 'polished', style: 'crossback', icon: 'M12 3l2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9z' }
   ];
 
   var st = { d: { color: 'cognac', finish: 'matte', style: 'classic', text: '' }, past: [], future: [], tab: 'customize', details: { brass: true, pens: true }, spin: false };
@@ -160,13 +160,9 @@ document.addEventListener('DOMContentLoaded', function () {
     return '<button type="button" class="chip" data-preset="' + i + '"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E3A66A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="' + p.icon + '"/></svg>' + p.prompt + '</button>';
   }).join('');
   $('#examples').innerHTML = PRESETS.map(function (p, i) {
-    var c = find(COLORS, p.color);
-    return '<button type="button" class="example" data-preset="' + i + '" aria-label="Use the ' + p.label + ' design"><svg viewBox="40 -24 120 190" style="width:78%;height:auto" aria-hidden="true">' +
-      '<path d="M78 22 L70 -24 M122 22 L130 -24" stroke="' + c.dark + '" stroke-width="7"/><path d="' + FULL + '" fill="' + c.hex + '"/>' +
-      '<rect x="62" y="38" width="76" height="34" rx="3" fill="' + c.dark + '" fill-opacity=".6" stroke="#F0D2A6" stroke-opacity=".5" stroke-dasharray="2 2"/>' +
-      '<text x="100" y="59" text-anchor="middle" font-family="Playfair Display, Georgia, serif" font-weight="700" font-size="11" fill="#F0D2A6">' + p.label + '</text>' +
-      '<rect x="40" y="110" width="52" height="46" rx="3" fill="' + c.dark + '" fill-opacity=".45"/><rect x="108" y="110" width="52" height="46" rx="3" fill="' + c.dark + '" fill-opacity=".45"/>' +
-      '<circle cx="72" cy="22" r="3" fill="#D4AE52"/><circle cx="128" cy="22" r="3" fill="#D4AE52"/></svg></button>';
+    return '<button type="button" class="example" data-preset="' + i + '" aria-label="Use the ' + p.title + ' design">' +
+      '<span class="ex-img"><img src="assets/img/apron-' + p.img + '.jpg" alt="' + p.title + ' in black leather with tan straps and brass rivets" loading="lazy" width="520" height="780"></span>' +
+      '<span class="ex-cap"><b>' + p.title + '</b><span>Use this design →</span></span></button>';
   }).join('');
   draw();
 });
