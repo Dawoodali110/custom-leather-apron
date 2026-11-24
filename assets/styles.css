@@ -181,3 +181,16 @@ textarea.input{height:auto;padding:12px 14px;resize:vertical}
 .example:hover{border-color:var(--orange)}
 .dark-input{height:48px;padding:0 14px;border:1px solid #4A3A2E;border-radius:8px;background:var(--dark);color:var(--cream)}
 .hidden{display:none!important}
+
+/* Photo banner hero */
+.hero-banner{position:relative;aspect-ratio:1774/887;min-height:560px;max-height:820px;display:flex;align-items:flex-start}
+.hero-banner .hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:right bottom}
+.hero-banner .wrap{position:relative;width:100%;max-width:none;padding-left:6.2%;padding-right:40px}
+.hero-banner .hero-text{max-width:560px;padding:clamp(40px,5.5%,88px) 0 0;gap:22px}
+.hero-banner .hero-text h1{font-size:clamp(44px,4.6vw,68px)}
+@media (max-width:900px){
+  .hero-banner{aspect-ratio:auto;min-height:0;max-height:none;flex-direction:column}
+  .hero-banner .hero-bg{position:static;height:auto;aspect-ratio:1774/887;object-position:center}
+  .hero-banner .wrap{padding:0 20px}
+  .hero-banner .hero-text{padding:32px 0 48px}
+}
