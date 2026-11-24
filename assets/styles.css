@@ -200,3 +200,11 @@ textarea.input{height:auto;padding:12px 14px;resize:vertical}
   .hero-banner .wrap{padding:0 20px}
   .hero-banner .hero-text{padding:32px 0 48px}
 }
+
+/* AI page photo preview */
+.ph-wrap{position:relative;height:clamp(320px,40vw,540px);aspect-ratio:2/3;max-width:100%;container-type:inline-size;transition:transform .8s;background:#FFFFFF;border-radius:10px;overflow:hidden}
+.ph-wrap img{display:block;width:100%;height:100%;object-fit:contain}
+.ph-patch{position:absolute;border-radius:3%/5%;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.5),inset 0 0 0 1px rgba(240,210,166,.25)}
+.ph-patch-bg{position:absolute;inset:0}
+.ph-patch-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 10%;font-family:var(--serif);font-weight:700;color:#E9C58E;letter-spacing:.02em;line-height:1;text-shadow:0 1px 0 rgba(0,0,0,.45)}
+@media (max-width:600px){#spin{padding:0 14px!important;font-size:14px!important;white-space:nowrap}}

@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
     { prompt: 'A premium apron with my logo', label: 'CUSTOM', img: 'custom', title: 'Custom Logo Apron', color: 'black', finish: 'polished', style: 'crossback', icon: 'M12 3l2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9z' }
   ];
 
-  var st = { d: { color: 'cognac', finish: 'matte', style: 'classic', text: '' }, past: [], future: [], tab: 'customize', details: { brass: true, pens: true }, spin: false };
+  var st = { d: { color: 'cognac', finish: 'matte', style: 'crossback', text: '', photo: null }, past: [], future: [], tab: 'customize', details: { brass: true, pens: true }, spin: false };
   function find(arr, id) { return arr.filter(function (x) { return x.id === id; })[0] || arr[0]; }
   function commit(ch) {
     st.past.push(Object.assign({}, st.d)); if (st.past.length > 30) st.past.shift();
@@ -78,11 +78,65 @@ document.addEventListener('DOMContentLoaded', function () {
       (st.details.towel ? '<path d="M150 ' + (ky + 52) + ' q8 10 0 20" fill="none" stroke="#D4AE52" stroke-width="2.5"/>' : '') +
       '</svg>';
   }
+  // ---- Photo preview ----
+  // patch = [left%, top%, width%, height%] of the chest patch in each 1024x1536 photo
+  var PHOTOS = {
+    brown: { src: 'assets/img/apron-brown.webp', patch: [35.9, 26.7, 27.7, 12.1], bg: '#4B2716', baked: 'YOUR LOGO' },
+    chef: { src: 'assets/img/apron-chef.jpg', patch: [36.7, 25.7, 27, 11.5], bg: '#1F1B18', baked: 'CHEF' },
+    barber: { src: 'assets/img/apron-barber.jpg', patch: [36.1, 26.6, 28, 13.2], bg: '#1F1B18', baked: 'BARBER' },
+    workshop: { src: 'assets/img/apron-workshop.jpg', patch: [36.5, 24.1, 27.4, 11.9], bg: '#1F1B18', baked: 'WORKSHOP' },
+    bbq: { src: 'assets/img/apron-bbq.jpg', patch: [35.4, 24.3, 29.8, 15.8], bg: '#1F1B18', baked: 'BBQ MASTER' },
+    custom: { src: 'assets/img/apron-custom.jpg', patch: [37, 22.3, 26, 5.6], bg: '#1F1B18', baked: '' }
+  };
+  var COLOR_FILTER = { cognac: '', chestnut: 'brightness(.86) saturate(1.05)', dark: 'brightness(.55) saturate(.9)', olive: 'hue-rotate(42deg) saturate(.55) brightness(.72)', navy: 'hue-rotate(185deg) saturate(.45) brightness(.6)', black: '' };
+  var FINISH_FILTER = { matte: '', vintage: 'contrast(1.1) sepia(.18)', waxed: 'saturate(1.2) contrast(1.05)', polished: 'brightness(1.07) contrast(1.08)' };
+  function photoKey(d) {
+    if (d.style !== 'crossback') return null;
+    if (d.photo) return d.photo;
+    return d.color === 'black' ? 'custom' : 'brown';
+  }
+  function photoState(d) {
+    var k = photoKey(d); if (!k) return null;
+    var P = PHOTOS[k], t = (d.text || '').toUpperCase().trim();
+    var filt = (k === 'brown' ? COLOR_FILTER[d.color] || '' : '') + ' ' + (FINISH_FILTER[d.finish] || '');
+    filt = filt.trim();
+    var show = !!t && t !== P.baked;
+    var fs = Math.min(3.6, P.patch[2] * 1.55 / Math.max(t.length, 4), P.patch[3] * 1.5 * 0.55);
+    return { k: k, P: P, t: t, filt: filt, show: show, fs: fs };
+  }
+  function previewPhoto(d, aria) {
+    var s = photoState(d), P = s.P, r = P.patch;
+    var rivet = function (x, y) { return '<span style="position:absolute;' + x + ':5%;' + y + ':9%;width:5%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 35%,#F3D58A,#A87C2C)"></span>'; };
+    return '<div class="ph-wrap" style="' + (st.spin ? 'transform:rotateY(360deg)' : '') + '">' +
+      '<img src="' + P.src + '" alt="' + esc(aria) + '" style="' + (s.filt ? 'filter:' + s.filt : '') + '">' +
+      (s.show ? '<div class="ph-patch" style="left:' + r[0] + '%;top:' + r[1] + '%;width:' + r[2] + '%;height:' + r[3] + '%">' +
+        '<span class="ph-patch-bg" style="background:' + P.bg + (s.filt ? ';filter:' + s.filt : '') + '"></span>' +
+        rivet('left', 'top') + rivet('right', 'top') + rivet('left', 'bottom') + rivet('right', 'bottom') +
+        '<span class="ph-patch-text" style="font-size:' + s.fs.toFixed(2) + 'cqw">' + esc(s.t) + '</span></div>' : '') +
+      '</div>';
+  }
+  function downloadPhoto() {
+    var s = photoState(st.d), img = new Image();
+    img.onload = function () {
+      var c = document.createElement('canvas'); c.width = img.naturalWidth; c.height = img.naturalHeight;
+      var x = c.getContext('2d'); x.filter = s.filt || 'none'; x.drawImage(img, 0, 0);
+      if (s.show) {
+        var r = s.P.patch, px = r[0] / 100 * c.width, py = r[1] / 100 * c.height, pw = r[2] / 100 * c.width, ph = r[3] / 100 * c.height;
+        x.fillStyle = s.P.bg; x.fillRect(px, py, pw, ph);
+        x.filter = 'none'; x.fillStyle = '#E9C58E'; x.textAlign = 'center'; x.textBaseline = 'middle';
+        x.font = '700 ' + (s.fs / 100 * c.width) + 'px "Playfair Display", Georgia, serif';
+        x.fillText(s.t, px + pw / 2, py + ph / 2);
+      }
+      c.toBlob(function (b) { var a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'my-apron-design.png'; a.click(); }, 'image/png');
+    };
+    img.src = s.P.src;
+  }
   function ctrl(on) { return 'ctrl' + (on ? ' on' : ''); }
 
   function draw() {
     var d = st.d, c = find(COLORS, d.color), f = find(FINISHES, d.finish), s = find(STYLES, d.style);
-    $('#preview').innerHTML = previewSVG(d, c.name + ' ' + s.label + ' leather apron, ' + f.label + ' finish');
+    var aria = c.name + ' ' + s.label + ' leather apron, ' + f.label + ' finish' + (d.text ? ', engraved ' + d.text : '');
+    $('#preview').innerHTML = photoKey(d) ? previewPhoto(d, aria) : previewSVG(d, aria);
     $('#color-name').textContent = c.name;
     $('#ai-price').textContent = '$' + (119 + (d.text ? 15 : 0)).toFixed(2);
     $('#ai-colors').innerHTML = COLORS.map(function (x) {
@@ -96,9 +150,10 @@ document.addEventListener('DOMContentLoaded', function () {
       return '<button type="button" data-style="' + x.id + '" aria-pressed="' + (x.id === d.style) + '" class="' + ctrl(x.id === d.style) + '" style="min-height:76px;padding:8px 4px;font-size:13px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px">' +
         '<svg aria-hidden="true" width="30" height="34" viewBox="0 -24 200 264" fill="none" stroke="currentColor" stroke-width="10" stroke-linejoin="round"><path d="' + x.strap + '"/><path d="' + x.body + '"/></svg>' + x.label + '</button>';
     }).join('');
-    $('#variants').innerHTML = ['cognac', 'black', 'dark'].map(function (id) {
-      var x = find(COLORS, id), on = id === d.color;
-      return '<button type="button" data-color="' + id + '" aria-label="' + x.name + ' variant" style="height:64px;border-radius:8px;background:#2A211B;cursor:pointer;display:flex;align-items:center;justify-content:center;border:' + (on ? '2px solid #D07A34' : '1px solid #4A3A2E') + '"><svg viewBox="0 0 200 240" style="height:70%;width:auto" aria-hidden="true"><path d="' + FULL + '" fill="' + x.hex + '"/></svg></button>';
+    var vk = photoKey(d);
+    $('#variants').innerHTML = [['cognac', 'brown', ''], ['dark', 'brown', COLOR_FILTER.dark], ['black', 'custom', '']].map(function (v) {
+      var x = find(COLORS, v[0]), on = vk && !d.photo && v[0] === d.color;
+      return '<button type="button" data-variant="' + v[0] + '" aria-label="' + x.name + ' crossback apron" style="height:76px;border-radius:8px;background:#FFFFFF;cursor:pointer;padding:3px;overflow:hidden;border:' + (on ? '2px solid #D07A34' : '1px solid #4A3A2E') + '"><img src="' + PHOTOS[v[1]].src + '" alt="" style="width:100%;height:100%;object-fit:contain' + (v[2] ? ';filter:' + v[2] : '') + '"></button>';
     }).join('') + '<button type="button" id="add-variant" aria-label="Random variant" style="height:64px;border:1px solid #4A3A2E;border-radius:8px;background:transparent;color:#F4EFE8;font-size:24px;cursor:pointer">+</button>';
     $('#ai-tabs').innerHTML = TABS.map(function (t) {
       return '<button type="button" role="tab" data-tab="' + t.id + '" aria-selected="' + (t.id === st.tab) + '" class="ai-tab' + (t.id === st.tab ? ' on' : '') + '"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="' + t.icon + '"/></svg>' + t.label + '</button>';
@@ -114,25 +169,26 @@ document.addEventListener('DOMContentLoaded', function () {
   // Events
   document.addEventListener('click', function (e) {
     var b = e.target.closest('button'); if (!b) return;
-    if (b.hasAttribute('data-color')) commit({ color: b.getAttribute('data-color') });
+    if (b.hasAttribute('data-color')) commit({ color: b.getAttribute('data-color'), photo: null });
+    else if (b.hasAttribute('data-variant')) commit({ color: b.getAttribute('data-variant'), style: 'crossback', photo: null });
     else if (b.hasAttribute('data-finish')) commit({ finish: b.getAttribute('data-finish') });
-    else if (b.hasAttribute('data-style')) commit({ style: b.getAttribute('data-style') });
+    else if (b.hasAttribute('data-style')) commit({ style: b.getAttribute('data-style'), photo: null });
     else if (b.hasAttribute('data-tab')) { st.tab = b.getAttribute('data-tab'); draw(); }
     else if (b.hasAttribute('data-detail')) { var k = b.getAttribute('data-detail'); st.details[k] = !st.details[k]; draw(); }
     else if (b.hasAttribute('data-preset')) {
       var p = PRESETS[+b.getAttribute('data-preset')];
-      commit({ color: p.color, finish: p.finish, style: p.style, text: p.label === 'CUSTOM' ? '' : p.label });
+      commit({ color: p.color, finish: p.finish, style: p.style, photo: p.img, text: p.label === 'CUSTOM' ? '' : p.label });
       $('#prompt').value = p.prompt; $('#status').textContent = 'Loaded “' + p.prompt + '”.';
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-    else if (b.id === 'add-variant') commit({ color: COLORS[Math.floor(Math.random() * COLORS.length)].id, finish: FINISHES[Math.floor(Math.random() * 4)].id });
+    else if (b.id === 'add-variant') commit({ color: COLORS[Math.floor(Math.random() * COLORS.length)].id, finish: FINISHES[Math.floor(Math.random() * 4)].id, style: 'crossback', photo: null });
   });
   $('#generate').addEventListener('click', function () {
     var p = $('#prompt').value.trim();
     if (!p) { $('#status').textContent = 'Describe your apron first, or pick a prompt below.'; return; }
     var btn = this; btn.disabled = true; $('#status').textContent = 'Generating your design…';
     setTimeout(function () {
-      var ch = parse(p); commit(ch); btn.disabled = false;
+      var ch = parse(p); if ('color' in ch || 'style' in ch) ch.photo = null; commit(ch); btn.disabled = false;
       $('#status').textContent = Object.keys(ch).length ? 'Design generated from your description.' : 'Design generated — fine-tune it with the options on the right.';
     }, 700);
   });
@@ -143,6 +199,7 @@ document.addEventListener('DOMContentLoaded', function () {
   $('#spin').addEventListener('click', function () { st.spin = !st.spin; draw(); });
   $('#fs').addEventListener('click', function () { var el = $('#preview').parentElement; if (el.requestFullscreen) el.requestFullscreen(); });
   $('#download').addEventListener('click', function () {
+    if (photoKey(st.d)) { downloadPhoto(); return; }
     var svg = $('#preview svg').outerHTML.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
     var a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }));
