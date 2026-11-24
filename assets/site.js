@@ -13,9 +13,9 @@
   };
   var PRODUCTS = [
     { id: 'classic', name: 'Classic Leather Apron', price: 119, reviews: 128, color: 'cognac', cat: 'chef', tags: ['best', 'custom', 'top'], desc: 'A timeless, full-grain leather apron built for chefs, makers, and everyday professionals.' },
-    { id: 'barber', name: 'Barber Leather Apron', price: 129, reviews: 94, color: 'black', cat: 'barber', tags: ['best', 'new', 'custom'], desc: 'Lightweight and sleek, with pockets sized for clippers, combs and shears.' },
+    { id: 'barber', name: 'Barber Leather Apron', price: 129, reviews: 94, color: 'black', colors: ['black'], photo: 'assets/img/product-barber.webp', cat: 'barber', tags: ['best', 'new', 'custom'], desc: 'Black full-grain leather with tan cross-back straps, slim clipper and trimmer sleeves, shear and comb pockets, and the embossed Barber patch.' },
     { id: 'workshop', name: 'Workshop Leather Apron', price: 139, reviews: 76, color: 'black', colors: ['black'], photo: 'assets/img/product-workshop.webp', cat: 'workshop', tags: ['best', 'new', 'top'], desc: 'Waxed-canvas body with full-grain leather tool pockets, a hammer loop, pencil holder, towel ring and reinforced corners — made for woodworkers and makers.' },
-    { id: 'chefpro', name: 'Chef Pro Apron', price: 149, reviews: 67, color: 'chocolate', cat: 'chef', tags: ['best', 'custom', 'top', 'new'], desc: 'Our heaviest full-bib apron with a towel loop and reinforced pockets.' },
+    { id: 'chefpro', name: 'Chef Pro Apron', price: 149, reviews: 67, color: 'brown', colors: ['brown', 'black'], photos: { brown: 'assets/img/product-chefpro-brown.webp', black: 'assets/img/product-chefpro-black.webp' }, cat: 'chef', tags: ['best', 'custom', 'top', 'new'], desc: 'Our heaviest full-bib chef apron: cross-back straps, deep utensil pockets, a knife sleeve, towel ring and the embossed Chef Collection patch.' },
     { id: 'artist', name: 'Artist Studio Apron', price: null, reviews: 0, color: 'brown', colors: ['brown'], photo: 'assets/img/product-artist.webp', cat: 'artist', tags: ['new'], desc: 'Paint-friendly full-grain leather with wide brush pockets, a palette-knife slot, a towel ring and reinforced corners.' },
     { id: 'bbq', name: 'BBQ Pitmaster Apron', price: null, reviews: 0, color: 'black', cat: 'bbq', tags: ['new', 'custom'], desc: 'Heat-resistant bib with a D-ring for tongs and a rugged finish.' }
   ];
@@ -167,10 +167,11 @@
   }
 
   // ---------- Product card ----------
+  function photoOf(p, color) { return p.photos ? (p.photos[color] || p.photos[p.color]) : p.photo; }
   function card(p) {
     var c = COLORS[p.color];
     return '<a class="card" href="product.html?id=' + p.id + '">' +
-      '<div class="img"><span class="heart">' + icon('heart', 22) + '</span>' + (p.photo ? '<img class="card-photo" src="' + p.photo + '" alt="' + esc(p.name) + '" loading="lazy">' : apron(c.hex, c.dark)) + '</div>' +
+      '<div class="img"><span class="heart">' + icon('heart', 22) + '</span>' + (photoOf(p, p.color) ? '<img class="card-photo" src="' + photoOf(p, p.color) + '" alt="' + esc(p.name) + '" loading="lazy">' : apron(c.hex, c.dark)) + '</div>' +
       '<div><div class="name">' + esc(p.name) + '</div>' +
       '<div class="meta"><span class="stars" aria-hidden="true">★★★★★</span>' + (p.reviews ? '(' + p.reviews + ')' : 'New') + '</div>' +
       '<div class="price">' + money(p.price) + '</div></div></a>';
@@ -240,11 +241,12 @@
       var c = COLORS[st.color];
       $('#p-price').textContent = money(price());
       $('#p-color').textContent = c.name;
-      if (p.photo) {
+      var ph = photoOf(p, st.color);
+      if (ph) {
         var v = VIEWS[st.view];
-        $('#p-main').innerHTML = '<img class="pdp-photo" src="' + p.photo + '" alt="' + esc(p.name) + ', ' + v[0].toLowerCase() + '" style="transform:scale(' + v[1] + ');transform-origin:' + v[2] + '">';
+        $('#p-main').innerHTML = '<img class="pdp-photo" src="' + ph + '" alt="' + esc(p.name) + ' in ' + c.name + ', ' + v[0].toLowerCase() + '" style="transform:scale(' + v[1] + ');transform-origin:' + v[2] + '">';
         $('#p-thumbs').innerHTML = VIEWS.map(function (x, i) {
-          return '<button type="button" aria-label="' + x[0] + '" data-view="' + i + '" class="' + (i === st.view ? 'on' : '') + '" style="overflow:hidden"><img src="' + p.photo + '" alt="" style="width:100%;height:100%;object-fit:contain;transform:scale(' + x[1] + ');transform-origin:' + x[2] + '"></button>';
+          return '<button type="button" aria-label="' + x[0] + '" data-view="' + i + '" class="' + (i === st.view ? 'on' : '') + '" style="overflow:hidden"><img src="' + ph + '" alt="" style="width:100%;height:100%;object-fit:contain;transform:scale(' + x[1] + ');transform-origin:' + x[2] + '"></button>';
         }).join('');
       } else {
         $('#p-main').innerHTML = apron(c.hex, c.dark, { label: p.name + ' in ' + c.name, text: st.text });
