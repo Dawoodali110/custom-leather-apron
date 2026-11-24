@@ -231,7 +231,8 @@
     var p = product(new URLSearchParams(location.search).get('id')) || PRODUCTS[0];
     var swatches = p.colors || ['brown', 'black', 'tan'];
     var VIEWS = [['Front view', '1', '50% 50%'], ['Logo patch detail', '2.3', '50% 20%'], ['Pocket detail', '1.9', '50% 55%'], ['Corner and stitching detail', '2.6', '12% 92%']];
-    var st = { color: swatches.indexOf(p.color) !== -1 ? p.color : 'brown', qty: 1, text: '', view: 0, tab: 'desc' };
+    var wanted = new URLSearchParams(location.search).get('color');
+    var st = { color: swatches.indexOf(wanted) !== -1 ? wanted : (swatches.indexOf(p.color) !== -1 ? p.color : swatches[0]), qty: 1, text: '', view: 0, tab: 'desc' };
     document.title = p.name + ' — Custom Leather Apron';
     $('#p-name').textContent = p.name; $('#p-crumb').textContent = p.name;
     $('#p-reviews').textContent = p.reviews ? '(' + p.reviews + ' Reviews)' : '(New)';
