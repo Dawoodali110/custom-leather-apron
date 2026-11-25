@@ -287,3 +287,16 @@ textarea.input{height:auto;padding:12px 14px;resize:vertical}
 .hue-card:hover .hue-img img{transform:translateX(-50%) translateY(-6px) scale(1.03)}
 .detail.photo-only img{height:auto;aspect-ratio:3/2;object-fit:cover;display:block}
 @media (max-width:600px){.detail-grid{grid-template-columns:1fr!important}}
+
+/* How it works v2 */
+.how{background:linear-gradient(180deg,#F1E8DC 0%,#F6F0E8 100%)}
+.how .section-title h2{font-size:clamp(34px,4vw,52px)}
+.how .steps{gap:22px}
+.how .step{border-radius:18px;padding:22px 22px 10px;gap:12px;box-shadow:0 2px 10px rgba(60,35,15,.08);border:1px solid #EADFCF}
+.step-head{display:flex;align-items:center;gap:12px}
+.step-head h3{flex:1;font-family:var(--sans);font-weight:700;font-size:19px;line-height:1.2}
+.step-head .step-num{flex:none;width:48px;height:48px;font-size:24px;background:radial-gradient(circle at 35% 30%,#8E4B22,#5A2A10);box-shadow:inset 0 0 0 2px rgba(240,200,140,.35)}
+.how .step p{font-size:15.5px;color:#3E342D;min-height:3.2em}
+.how .step img{display:block;width:100%;height:auto;aspect-ratio:600/330;object-fit:cover;border-radius:12px;margin-top:auto;transition:transform .5s}
+.how .step:hover img{transform:scale(1.03)}
+.how .step{overflow:hidden}
