@@ -285,3 +285,5 @@ textarea.input{height:auto;padding:12px 14px;resize:vertical}
 .hue-img{overflow:hidden;position:relative}
 .hue-img img{position:absolute;left:50%;bottom:10px;height:calc(100% - 28px);width:auto;max-width:none;transform:translateX(-50%)}
 .hue-card:hover .hue-img img{transform:translateX(-50%) translateY(-6px) scale(1.03)}
+.detail.photo-only img{height:auto;aspect-ratio:3/2;object-fit:cover;display:block}
+@media (max-width:600px){.detail-grid{grid-template-columns:1fr!important}}
