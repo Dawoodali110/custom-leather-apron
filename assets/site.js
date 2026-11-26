@@ -223,6 +223,7 @@
             [['help', 'FAQs', 'index.html#faq'], ['truck', 'Shipping Policy', 'shipping.html'], ['ret', 'Returns &amp; Refunds', 'returns.html']].map(function (x) { return '<a class="ic" href="' + x[2] + '">' + icon(x[0]) + x[1] + '</a>'; }).join('') + '</div>' +
           '<div style="flex:1.3 1 240px;border-left:1px solid #3A2C22;padding-left:32px;gap:14px"><h4>Contact Us</h4>' +
             '<a class="ic" href="mailto:sales@customleatherapron.com">' + icon('mail') + 'sales@customleatherapron.com</a>' +
+            '<a class="ic" href="https://www.google.com/maps/search/?api=1&query=2638+28th+St+W,+Rosamond,+CA+93560" target="_blank" rel="noopener">' + icon('pin') + '2638 28th St W,<br>Rosamond, CA 93560</a>' +
             '<a class="ic" href="contact.html">' + icon('help') + 'Contact form</a></div>' +
         '</div>' +
         '<div class="trust">' + trust.map(function (t) { return '<div><span style="color:#D9954E">' + icon(t[0], 34, ' stroke-width="1.3"') + '</span><div><b>' + t[1] + '</b><small>' + t[2] + '</small></div></div>'; }).join('') + '</div>' +

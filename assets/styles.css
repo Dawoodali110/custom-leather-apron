@@ -947,3 +947,6 @@ img{max-width:100%}
 @media (max-width:600px){.hues .wrap{padding-left:0;padding-right:0}.hues .section-title,.hues .wrap>div:last-child{padding-left:16px;padding-right:16px}.hue-grid{margin:0!important;padding-left:16px!important;scroll-padding-left:16px}.hue-card:last-child{margin-right:16px}}
 .contact-cards.two{grid-template-columns:repeat(2,minmax(0,1fr));max-width:900px}
 @media (max-width:600px){.contact-cards.two{grid-template-columns:1fr}}
+.contact-cards.three{grid-template-columns:repeat(3,minmax(0,1fr));max-width:1100px}
+@media (max-width:900px){.contact-cards.three{grid-template-columns:1fr}}
+.site-footer a.ic svg{flex-shrink:0}
