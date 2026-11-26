@@ -341,3 +341,52 @@ textarea.input{height:auto;padding:12px 14px;resize:vertical}
 .about-hero h1{text-shadow:0 2px 12px rgba(0,0,0,.4)}
 .about-photo{flex:1 1 480px;min-width:0;border-radius:12px;overflow:hidden;box-shadow:0 10px 30px rgba(40,20,8,.18)}
 .about-photo img{display:block;width:100%;height:auto}
+
+/* ---- About: extended ---- */
+.manifesto{background:#2A1C13;color:var(--cream);padding:88px 0;text-align:center}
+.manifesto .quote{font-family:var(--serif);font-size:clamp(32px,4.6vw,58px);font-weight:700;line-height:1.15;margin:0}
+.manifesto .quote span{color:#D9954E}
+.manifesto .quote-sub{max-width:680px;margin:22px auto 0;color:#DCD2C6;font-size:18px;line-height:1.7}
+.proc-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+.proc{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.proc img{width:100%;aspect-ratio:3/2;object-fit:cover;transition:transform .5s}
+.proc:hover img{transform:scale(1.04)}
+.proc-body{padding:22px 24px 26px;display:flex;flex-direction:column;gap:8px}
+.proc-num{font-family:var(--serif);font-size:15px;font-weight:700;color:#8E4B22;letter-spacing:.1em}
+.proc h3{font-size:22px}
+.proc p{margin:0;color:#4A3F37;font-size:15.5px;line-height:1.7}
+.trades-sec{background:#16120F;color:var(--cream);padding:88px 0}
+.trades-sec .section-title h2{color:var(--cream)}
+.trade-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px}
+.trade{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:3/4;color:#fff;text-decoration:none;display:block}
+.trade img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.trade:hover img{transform:scale(1.06)}
+.trade::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(12,8,5,.9),rgba(12,8,5,.1) 60%)}
+.trade span{position:absolute;left:16px;right:16px;bottom:16px;z-index:1;display:flex;flex-direction:column;gap:4px}
+.trade b{font-family:var(--serif);font-size:20px}
+.trade small{font-size:13.5px;color:#E6DDD1;line-height:1.45}
+.trade:hover{color:#fff}
+.mat-wrap{display:flex;flex-wrap:wrap;gap:56px;align-items:center}
+.mat-intro{flex:1 1 360px;min-width:0;display:flex;flex-direction:column;gap:18px;align-items:flex-start}
+.mat-intro h2{font-size:42px}
+.mat-intro p{margin:0;color:#4A3F37;font-size:17px;line-height:1.7}
+.mat-grid{flex:1.3 1 520px;min-width:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.mat{background:#fff;border:1px solid var(--line);border-left:4px solid #8E4B22;border-radius:10px;padding:22px 24px}
+.mat h3{font-size:20px;margin-bottom:6px}
+.mat p{margin:0;color:#4A3F37;font-size:15px;line-height:1.65}
+.promise-sec{background:var(--sand);padding:88px 0}
+.promise-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}
+.promise{background:#fff;border-radius:14px;padding:28px 24px;border:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+.promise h3{font-size:20px}
+.promise p{margin:0;color:#4A3F37;font-size:15px;line-height:1.65}
+.care-wrap{display:flex;flex-wrap:wrap;gap:56px;align-items:center}
+.care-wrap>img{flex:1 1 420px;min-width:0;border-radius:14px;width:100%;height:auto;box-shadow:0 10px 30px rgba(40,20,8,.15)}
+.care-wrap>div{flex:1 1 440px;min-width:0;display:flex;flex-direction:column;gap:16px}
+.care-wrap h2{font-size:40px}
+.care-wrap p{margin:0;color:#4A3F37;font-size:17px;line-height:1.7}
+.care-list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px}
+.care-list li{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 18px;color:#4A3F37;line-height:1.6}
+.care-list b{color:var(--ink)}
+@media (max-width:1000px){.proc-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.trade-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.promise-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.proc-grid,.mat-grid,.promise-grid{grid-template-columns:1fr}.trade-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.mat-intro h2,.care-wrap h2{font-size:32px}}
+.proc img.closeup{object-position:0% 60%;transform-origin:left center}
