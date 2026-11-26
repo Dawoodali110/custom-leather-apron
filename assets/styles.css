@@ -945,3 +945,5 @@ img{max-width:100%}
   .ai-grid>section:nth-child(3){flex-basis:100%!important}
 }
 @media (max-width:600px){.hues .wrap{padding-left:0;padding-right:0}.hues .section-title,.hues .wrap>div:last-child{padding-left:16px;padding-right:16px}.hue-grid{margin:0!important;padding-left:16px!important;scroll-padding-left:16px}.hue-card:last-child{margin-right:16px}}
+.contact-cards.two{grid-template-columns:repeat(2,minmax(0,1fr));max-width:900px}
+@media (max-width:600px){.contact-cards.two{grid-template-columns:1fr}}
