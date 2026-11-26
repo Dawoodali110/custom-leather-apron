@@ -27,11 +27,11 @@
 <link rel="manifest" href="site.webmanifest">
 <!-- seo:end -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css?v=1795705193">
-<script src="assets/config.js?v=1795705193" defer></script>
-<script src="assets/db.js?v=1795705193" defer></script>
-<script src="assets/site.js?v=1795705193" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css?v=1795705890">
+<script src="assets/config.js?v=1795705890" defer></script>
+<script src="assets/db.js?v=1795705890" defer></script>
+<script src="assets/site.js?v=1795705890" defer></script>
 </head>
 <body data-page="checkout">
 <div id="site-header"></div>
@@ -39,7 +39,7 @@
   <ol class="co-steps" aria-label="Checkout progress"><li class="done"><a href="cart.html"><span class="n">✓</span>Cart</a></li><li class="current" aria-current="step"><span class="n">2</span>Details & shipping</li><li class=""><span class="n">3</span>Confirmation</li></ol>
   <h1 class="co-title">Checkout</h1>
 
-  <div id="co-empty" class="hidden co-empty"><p>Your cart is empty.</p><a class="btn btn-primary" href="shop.html">Shop Leather Aprons <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+  <div id="co-empty" class="hidden co-empty"><p>Your cart is empty.</p><a class="btn btn-primary" href="shop.html">Shop aprons</a></div>
 
   <div id="co-main" class="co-layout">
     <form id="co-form" class="co-form" novalidate>
@@ -72,7 +72,7 @@
       <section class="co-step">
         <h2><span>3</span>Shipping method</h2>
         <label class="co-radio"><input type="radio" name="co-ship" value="standard" checked><span><b>Standard shipping</b><small id="co-ship-eta">3–7 business days after dispatch</small></span><em id="co-ship-price">Free</em></label>
-        <p class="co-hint">Aprons ship in 1–3 business days (3–5 for personalized aprons). See our <a href="shipping.html">Shipping Policy</a>.</p>
+        <p class="co-hint">Aprons ship in 1–3 business days (3–5 for personalized aprons). See our <a href="shipping.html">Shipping policy</a>.</p>
       </section>
 
       <section class="co-step">
@@ -84,10 +84,10 @@
         <label class="field"><span>Order notes <small>(optional)</small></span><textarea class="input" id="co-notes" rows="3" placeholder="Engraving details, logo instructions, delivery notes…"></textarea></label>
       </section>
 
-      <label class="co-check"><input type="checkbox" id="co-terms" required><span>I agree to the <a href="terms.html" target="_blank">Terms of Service</a>, <a href="returns.html" target="_blank">Returns &amp; Refunds</a> and <a href="privacy.html" target="_blank">Privacy Policy</a>.</span></label>
+      <label class="co-check"><input type="checkbox" id="co-terms" required><span>I agree to the <a href="terms.html" target="_blank">Terms of service</a>, <a href="returns.html" target="_blank">Returns &amp; refunds</a> and <a href="privacy.html" target="_blank">Privacy policy</a>.</span></label>
       <p id="co-error" class="cf-error hidden" role="alert"></p>
       <button type="submit" class="btn btn-primary co-submit"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> Place Order · <span id="co-btn-total">$0.00</span></button>
-      <p class="cf-small">No payment is taken now — we email you a secure payment link after confirming your order.</p>
+      <p class="cf-small">No payment is taken now, we email you a secure payment link after confirming your order.</p>
     </form>
 
     <aside class="co-summary summary-card" aria-label="Order summary">
@@ -110,7 +110,7 @@
     <h2>Thank you, <span id="co-done-name"></span>!</h2>
     <p id="co-done-how"></p><span id="co-done-id" hidden></span>
     <p>We'll reply to <b id="co-done-email"></b> to confirm your engraving and shipping details. Questions? Email <a href="mailto:sales@customleatherapron.com">sales@customleatherapron.com</a>.</p>
-    <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:8px"><a class="btn btn-primary" href="shop.html">Continue Shopping <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><button type="button" id="co-resend" class="btn btn-outline-dark">Open email again</button></div>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:8px"><a class="btn btn-primary" href="shop.html">Continue shopping</a><button type="button" id="co-resend" class="btn btn-outline-dark">Open email again</button></div>
   </section>
 </main>
 <div id="site-footer"></div>

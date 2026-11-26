@@ -1,4 +1,4 @@
-/* Custom Leather Apron — shared site script */
+/* Custom Leather Apron, shared site script */
 (function () {
   'use strict';
 
@@ -13,18 +13,18 @@
     oxblood: { name: 'Oxblood', hex: '#8A2A18', dark: '#4E140A' }
   };
   var PRODUCTS = [
-    { id: 'classic', name: 'Classic Leather Apron', price: 119, color: 'brown', colors: ['brown', 'black', 'tan', 'oxblood', 'olive'], photos: { brown: 'assets/img/product-classic-brown.webp', black: 'assets/img/product-classic-black.webp', tan: 'assets/img/product-classic-tan.webp', oxblood: 'assets/img/product-classic-oxblood.webp', olive: 'assets/img/product-classic-olive.webp' }, cat: 'chef', tags: ['best', 'custom', 'top'], desc: 'A timeless full-grain leather bib with cross-back straps, brass buckles, a deep double front pocket, a towel ring and reinforced corners — built for chefs, makers and everyday professionals.' },
+    { id: 'classic', name: 'Classic Leather Apron', price: 119, color: 'brown', colors: ['brown', 'black', 'tan', 'oxblood', 'olive'], photos: { brown: 'assets/img/product-classic-brown.webp', black: 'assets/img/product-classic-black.webp', tan: 'assets/img/product-classic-tan.webp', oxblood: 'assets/img/product-classic-oxblood.webp', olive: 'assets/img/product-classic-olive.webp' }, cat: 'chef', tags: ['best', 'custom', 'top'], desc: 'A timeless full-grain leather bib with cross-back straps, brass buckles, a deep double front pocket, a towel ring and reinforced corners, built for chefs, makers and everyday professionals.' },
     { id: 'barber', name: 'Barber Leather Apron', price: 129, color: 'black', colors: ['black'], photo: 'assets/img/product-barber.webp', cat: 'barber', tags: ['best', 'new', 'custom'], desc: 'Black full-grain leather with tan cross-back straps, slim clipper and trimmer sleeves, shear and comb pockets, and the embossed Barber patch.' },
-    { id: 'workshop', name: 'Workshop Leather Apron', price: 139, color: 'black', colors: ['black'], photo: 'assets/img/product-workshop.webp', cat: 'workshop', tags: ['best', 'new', 'top'], desc: 'Waxed-canvas body with full-grain leather tool pockets, a hammer loop, pencil holder, towel ring and reinforced corners — made for woodworkers and makers.' },
+    { id: 'workshop', name: 'Workshop Leather Apron', price: 139, color: 'black', colors: ['black'], photo: 'assets/img/product-workshop.webp', cat: 'workshop', tags: ['best', 'new', 'top'], desc: 'Waxed-canvas body with full-grain leather tool pockets, a hammer loop, pencil holder, towel ring and reinforced corners, made for woodworkers and makers.' },
     { id: 'chefpro', name: 'Chef Pro Apron', price: 149, color: 'brown', colors: ['brown', 'black'], photos: { brown: 'assets/img/product-chefpro-brown.webp', black: 'assets/img/product-chefpro-black.webp' }, cat: 'chef', tags: ['best', 'custom', 'top', 'new'], desc: 'Our heaviest full-bib chef apron: cross-back straps, deep utensil pockets, a knife sleeve, towel ring and the embossed Chef Collection patch.' },
     { id: 'artist', name: 'Artist Studio Apron', price: null, color: 'brown', colors: ['brown'], photo: 'assets/img/product-artist.webp', cat: 'artist', tags: ['new'], desc: 'Paint-friendly full-grain leather with wide brush pockets, a palette-knife slot, a towel ring and reinforced corners.' },
     { id: 'bbq', name: 'BBQ Pitmaster Apron', price: null, color: 'brown', colors: ['brown'], photo: 'assets/img/product-bbq.webp', cat: 'bbq', tags: ['new', 'custom'], desc: 'Heat-resistant leather bib with tool pockets for spatula, fork, brush and thermometer, a sauce-bottle sleeve, towel and tong rings, and reinforced corners.' }
   ];
-  var COPY = {"classic": {"title": "Classic Leather Apron — Full-Grain, Personalized", "meta": "The Classic Leather Apron: full-grain leather, cross-back straps, solid brass buckles and a riveted chest patch engraved with your logo or name. Five colours.", "intro": "The apron that started it all. Full-grain leather, cross-back straps and solid brass hardware — with a riveted chest patch ready for your name or logo.", "long": ["Some tools earn their place on the hook by the door. The Classic Leather Apron is one of them. Cut from full-grain leather, it shrugs off splashes, sparks and spills — and grows richer in colour every time you put it on.", "Cross-back straps spread the weight across your shoulders instead of your neck, so it stays comfortable through a double shift. Solid brass buckles dial in the fit in seconds, and a side ring keeps a towel exactly where your hand expects it.", "Up front, a deep double pocket carries a phone, notebook, thermometer or tape measure, while riveted corners protect the places aprons wear out first. Then make it unmistakably yours: we engrave your logo, initials or business name on the chest patch."], "features": ["Full-grain leather in Brown, Black, Tan, Oxblood or Olive", "Cross-back straps with solid brass buckles", "Deep double front pocket with riveted corners", "Side towel ring for quick wipe-downs", "Riveted chest patch, ready for your engraving"], "best": "Chefs, baristas, bartenders, makers and serious home cooks."}, "barber": {"title": "Barber Leather Apron with Clipper & Shear Pockets", "meta": "A black full-grain leather barber apron with clipper, trimmer, shear and comb pockets, tan cross-back straps and an engravable patch. Built for the chair.", "intro": "Built for the chair. Black full-grain leather, tan cross-back straps and pockets cut for clippers, trimmers, shears and combs.", "long": ["Great barbering is about having the right tool in your hand without ever looking away from the mirror. The Barber Leather Apron keeps clippers, trimmers, shears and combs exactly where you reach for them — in structured leather sleeves that hold their shape all day.", "Hair brushes straight off the smooth black leather, so you look as sharp at your last cut as you did at your first. Tan cross-back straps take the strain off your neck, and brass hardware adds a quiet touch of polish to the shop floor.", "Engrave your shop name or logo on the chest patch and give the whole team a signature look clients remember."], "features": ["Black full-grain leather with contrast tan straps", "Slim sleeves for clippers and trimmers", "Dedicated shear and comb pockets", "Smooth finish that hair brushes right off", "Embossed Barber patch — or your own logo"], "best": "Barbers, hairstylists, groomers and tattoo artists."}, "workshop": {"title": "Leather Workshop Apron for Woodworking & Tools", "meta": "A heavy-duty workshop apron with leather tool pockets, a hammer loop, pencil holder and towel ring. Made for woodworkers, carpenters and makers. Add your logo.", "intro": "A heavy-duty work apron with leather tool pockets, a hammer loop and a pencil holder — made for woodworkers, carpenters and makers.", "long": ["Every trip back to the bench costs you momentum. The Workshop Leather Apron keeps your most-used tools on your body: screwdrivers, a tape measure, wrenches, pliers and a carpenter's pencil, each in its own leather pocket, with a hammer loop on the side.", "The tough, dark body takes on wood glue, stain and shavings without complaint, while full-grain leather reinforces the pockets and corners where tools rub hardest. Cross-back straps keep the load on your shoulders, not your neck, through long build days.", "A towel ring and lower D-ring handle rags and clips, and the chest patch can carry your workshop name or logo — perfect for small teams, makerspaces and gifts for the woodworker who has everything."], "features": ["Leather tool pockets for drivers, wrenches and pliers", "Side hammer loop and pencil holder", "Towel ring and lower D-ring", "Riveted, leather-reinforced corners", "Engravable Workshop patch"], "best": "Woodworkers, carpenters, blacksmiths, mechanics and DIY makers."}, "chefpro": {"title": "Chef Pro Leather Apron with Knife & Utensil Pockets", "meta": "The Chef Pro Leather Apron: full-bib leather with deep utensil pockets, a knife sleeve, towel ring and cross-back straps. Brown or black, personalized with your logo.", "intro": "Our hardest-working kitchen apron. A full leather bib with deep utensil pockets, a knife sleeve and a towel ring — in Brown or Black.", "long": ["Designed around the rhythm of a busy pass. Deep front pockets hold tongs, whisks, spatulas and spoons upright and within reach, while a dedicated knife sleeve keeps a paring knife or thermometer secure.", "The full bib covers you from chest to knee, so oil spatter and sauce splashes wipe away instead of soaking through. Cross-back straps distribute the weight evenly, and the towel ring means no more hunting for a side towel mid-service.", "Choose rich Brown or sharp Black, then add your restaurant's logo or your own name to the Chef Collection patch."], "features": ["Full-bib coverage in Brown or Black leather", "Deep pockets for tongs, whisks and spatulas", "Knife and thermometer sleeve", "Towel ring and cross-back straps", "Engraved Chef Collection patch — or your logo"], "best": "Professional chefs, line cooks, caterers and passionate home cooks."}, "artist": {"title": "Artist Leather Apron with Brush Pockets", "meta": "A full-grain leather artist apron with brush pockets, a palette-knife slot, paint tube pockets and a towel ring. For painters, potters and illustrators.", "intro": "A studio apron that loves paint as much as you do. Full-grain leather with brush pockets, a palette-knife slot and a towel ring.", "long": ["Paint, clay and charcoal belong on the canvas — not on your clothes. The Artist Studio Apron gives every tool a home: tall brush pockets keep bristles upright, a slim slot holds your palette knife, and smaller pockets carry tubes and a watercolour pan.", "Leather wipes clean in seconds and wears every splash as part of its story. A towel ring on the side keeps a rag ready for quick brush cleans, and riveted corners stand up to years of studio life.", "Engrave your name or studio mark on the patch — a beautiful gift for painters, potters, illustrators and art teachers."], "features": ["Tall brush pockets and palette-knife slot", "Pockets for paint tubes and a watercolour pan", "Side towel ring for brush cleaning", "Wipe-clean full-grain leather", "Engravable Artist Collection patch"], "best": "Painters, potters, illustrators, sculptors and art teachers."}, "bbq": {"title": "BBQ Leather Apron for Grilling — Personalized Gift", "meta": "A leather BBQ apron with pockets for spatula, fork, brush and thermometer, a sauce-bottle sleeve and towel ring. A personalized gift every grill master will use.", "intro": "Built for fire and smoke. A leather grilling apron with pockets for your spatula, fork, brush and thermometer — and a sleeve for the sauce.", "long": ["Leather is the original grilling armour. It handles heat, flare-ups and grease far better than cotton, and every cookout adds a little more character.", "Up front, tool pockets hold a spatula, meat fork, basting brush and probe thermometer, with a side sleeve for your squeeze bottle of sauce and a towel ring for the inevitable mess. A second ring keeps tongs or a bottle opener on hand.", "Engrave a name, nickname or backyard brand on the BBQ Collection patch for a gift that gets used every weekend."], "features": ["Pockets for spatula, fork, brush and thermometer", "Sauce-bottle sleeve and tong ring", "Towel ring for quick clean-ups", "Heat-tough leather with riveted corners", "Engravable BBQ Collection patch"], "best": "Pitmasters, backyard grillers, smokehouse crews and BBQ gift-givers."}};
-  var SPECS = [["Leather", "Full-grain leather that softens and darkens with wear"], ["Hardware", "Solid brass buckles, rings and rivets"], ["Stitching", "Waxed thread, double-stitched at stress points"], ["Fit", "Adjustable cross-back straps — one size fits most adults"], ["Personalization", "Logo, name or initials engraved on the chest patch (+$15)"], ["Care", "Wipe clean with a damp cloth; condition every few months"], ["Warranty", "1-year craftsmanship warranty"]];
+  var COPY = {"classic": {"title": "Classic Leather Apron | Full-Grain, Personalized", "meta": "The Classic Leather Apron: full-grain leather, cross-back straps, solid brass buckles and a riveted chest patch engraved with your logo or name. Five colours.", "intro": "The apron that started it all. Full-grain leather, cross-back straps and solid brass hardware, with a riveted chest patch ready for your name or logo.", "long": ["Some tools earn their place on the hook by the door. The Classic Leather Apron is one of them. Cut from full-grain leather, it shrugs off splashes, sparks and spills, and grows richer in colour every time you put it on.", "Cross-back straps spread the weight across your shoulders instead of your neck, so it stays comfortable through a double shift. Solid brass buckles dial in the fit in seconds, and a side ring keeps a towel exactly where your hand expects it.", "Up front, a deep double pocket carries a phone, notebook, thermometer or tape measure, while riveted corners protect the places aprons wear out first. Then make it unmistakably yours: we engrave your logo, initials or business name on the chest patch."], "features": ["Full-grain leather in Brown, Black, Tan, Oxblood or Olive", "Cross-back straps with solid brass buckles", "Deep double front pocket with riveted corners", "Side towel ring for quick wipe-downs", "Riveted chest patch, ready for your engraving"], "best": "Chefs, baristas, bartenders, makers and serious home cooks."}, "barber": {"title": "Barber Leather Apron with Clipper & Shear Pockets", "meta": "A black full-grain leather barber apron with clipper, trimmer, shear and comb pockets, tan cross-back straps and an engravable patch. Built for the chair.", "intro": "Built for the chair. Black full-grain leather, tan cross-back straps and pockets cut for clippers, trimmers, shears and combs.", "long": ["Great barbering is about having the right tool in your hand without ever looking away from the mirror. The Barber Leather Apron keeps clippers, trimmers, shears and combs exactly where you reach for them, in structured leather sleeves that hold their shape all day.", "Hair brushes straight off the smooth black leather, so you look as sharp at your last cut as you did at your first. Tan cross-back straps take the strain off your neck, and brass hardware adds a quiet touch of polish to the shop floor.", "Engrave your shop name or logo on the chest patch and give the whole team a signature look clients remember."], "features": ["Black full-grain leather with contrast tan straps", "Slim sleeves for clippers and trimmers", "Dedicated shear and comb pockets", "Smooth finish that hair brushes right off", "Embossed Barber patch, or your own logo"], "best": "Barbers, hairstylists, groomers and tattoo artists."}, "workshop": {"title": "Leather Workshop Apron for Woodworking & Tools", "meta": "A heavy-duty workshop apron with leather tool pockets, a hammer loop, pencil holder and towel ring. Made for woodworkers, carpenters and makers. Add your logo.", "intro": "A heavy-duty work apron with leather tool pockets, a hammer loop and a pencil holder, made for woodworkers, carpenters and makers.", "long": ["Every trip back to the bench costs you momentum. The Workshop Leather Apron keeps your most-used tools on your body: screwdrivers, a tape measure, wrenches, pliers and a carpenter's pencil, each in its own leather pocket, with a hammer loop on the side.", "The tough, dark body takes on wood glue, stain and shavings without complaint, while full-grain leather reinforces the pockets and corners where tools rub hardest. Cross-back straps keep the load on your shoulders, not your neck, through long build days.", "A towel ring and lower D-ring handle rags and clips, and the chest patch can carry your workshop name or logo, perfect for small teams, makerspaces and gifts for the woodworker who has everything."], "features": ["Leather tool pockets for drivers, wrenches and pliers", "Side hammer loop and pencil holder", "Towel ring and lower D-ring", "Riveted, leather-reinforced corners", "Engravable Workshop patch"], "best": "Woodworkers, carpenters, blacksmiths, mechanics and DIY makers."}, "chefpro": {"title": "Chef Pro Leather Apron with Knife & Utensil Pockets", "meta": "The Chef Pro Leather Apron: full-bib leather with deep utensil pockets, a knife sleeve, towel ring and cross-back straps. Brown or black, personalized with your logo.", "intro": "Our hardest-working kitchen apron. A full leather bib with deep utensil pockets, a knife sleeve and a towel ring, in Brown or Black.", "long": ["Designed around the rhythm of a busy pass. Deep front pockets hold tongs, whisks, spatulas and spoons upright and within reach, while a dedicated knife sleeve keeps a paring knife or thermometer secure.", "The full bib covers you from chest to knee, so oil spatter and sauce splashes wipe away instead of soaking through. Cross-back straps distribute the weight evenly, and the towel ring means no more hunting for a side towel mid-service.", "Choose rich Brown or sharp Black, then add your restaurant's logo or your own name to the Chef Collection patch."], "features": ["Full-bib coverage in Brown or Black leather", "Deep pockets for tongs, whisks and spatulas", "Knife and thermometer sleeve", "Towel ring and cross-back straps", "Engraved Chef Collection patch, or your logo"], "best": "Professional chefs, line cooks, caterers and passionate home cooks."}, "artist": {"title": "Artist Leather Apron with Brush Pockets", "meta": "A full-grain leather artist apron with brush pockets, a palette-knife slot, paint tube pockets and a towel ring. For painters, potters and illustrators.", "intro": "A studio apron that loves paint as much as you do. Full-grain leather with brush pockets, a palette-knife slot and a towel ring.", "long": ["Paint, clay and charcoal belong on the canvas, not on your clothes. The Artist Studio Apron gives every tool a home: tall brush pockets keep bristles upright, a slim slot holds your palette knife, and smaller pockets carry tubes and a watercolour pan.", "Leather wipes clean in seconds and wears every splash as part of its story. A towel ring on the side keeps a rag ready for quick brush cleans, and riveted corners stand up to years of studio life.", "Engrave your name or studio mark on the patch, a beautiful gift for painters, potters, illustrators and art teachers."], "features": ["Tall brush pockets and palette-knife slot", "Pockets for paint tubes and a watercolour pan", "Side towel ring for brush cleaning", "Wipe-clean full-grain leather", "Engravable Artist Collection patch"], "best": "Painters, potters, illustrators, sculptors and art teachers."}, "bbq": {"title": "BBQ Leather Apron for Grilling | Personalized Gift", "meta": "A leather BBQ apron with pockets for spatula, fork, brush and thermometer, a sauce-bottle sleeve and towel ring. A personalized gift every grill master will use.", "intro": "Built for fire and smoke. A leather grilling apron with pockets for your spatula, fork, brush and thermometer, and a sleeve for the sauce.", "long": ["Leather is the original grilling armour. It handles heat, flare-ups and grease far better than cotton, and every cookout adds a little more character.", "Up front, tool pockets hold a spatula, meat fork, basting brush and probe thermometer, with a side sleeve for your squeeze bottle of sauce and a towel ring for the inevitable mess. A second ring keeps tongs or a bottle opener on hand.", "Engrave a name, nickname or backyard brand on the BBQ Collection patch for a gift that gets used every weekend."], "features": ["Pockets for spatula, fork, brush and thermometer", "Sauce-bottle sleeve and tong ring", "Towel ring for quick clean-ups", "Heat-tough leather with riveted corners", "Engravable BBQ Collection patch"], "best": "Pitmasters, backyard grillers, smokehouse crews and BBQ gift-givers."}};
+  var SPECS = [["Leather", "Full-grain leather that softens and darkens with wear"], ["Hardware", "Solid brass buckles, rings and rivets"], ["Stitching", "Waxed thread, double-stitched at stress points"], ["Fit", "Adjustable cross-back straps, one size fits most adults"], ["Personalization", "Logo, name or initials engraved on the chest patch (+$15)"], ["Care", "Wipe clean with a damp cloth; condition every few months"], ["Warranty", "1-year craftsmanship warranty"]];
   var SITE = 'https://dawoodali110.github.io/custom-leather-apron/';
   var BRAND = 'Custom Leather Apron';
-  var CAT_COPY = {"all": {"h1": "Shop Leather Aprons", "intro": "Handcrafted full-grain leather aprons for every trade — each one finished with solid brass hardware and ready for your logo or name.", "title": "Shop Leather Aprons — Chef, Barber, Workshop, BBQ & Artist", "meta": "Shop handcrafted full-grain leather aprons for chefs, barbers, woodworkers, artists and pitmasters. Personalize with your logo or name. Free shipping over $99."}, "chef": {"h1": "Leather Chef Aprons", "intro": "Kitchen-tough leather bibs with deep utensil pockets, knife sleeves and towel rings — built for the heat of service.", "title": "Leather Chef Aprons — Personalized Kitchen Aprons", "meta": "Leather chef aprons with utensil pockets, knife sleeves and towel rings. Full-grain leather, cross-back straps and your restaurant logo engraved on the chest."}, "barber": {"h1": "Leather Barber Aprons", "intro": "Sleek black leather with sleeves for clippers, trimmers, shears and combs. Hair brushes right off.", "title": "Leather Barber Aprons with Clipper Pockets", "meta": "Black full-grain leather barber aprons with clipper, trimmer, shear and comb pockets. Personalize with your barbershop logo."}, "workshop": {"h1": "Leather Workshop Aprons", "intro": "Heavy-duty work aprons with tool pockets, hammer loops and pencil holders for woodworkers and makers.", "title": "Leather Workshop & Woodworking Aprons", "meta": "Heavy-duty leather workshop aprons with tool pockets, hammer loop and pencil holder. Built for woodworkers, carpenters and makers."}, "artist": {"h1": "Leather Artist Aprons", "intro": "Studio aprons with tall brush pockets, a palette-knife slot and a towel ring. Paint wipes off; character stays.", "title": "Leather Artist Aprons for Painters & Potters", "meta": "Full-grain leather artist aprons with brush pockets, palette-knife slot and towel ring — for painters, potters and illustrators."}, "bbq": {"h1": "Leather BBQ Aprons", "intro": "Grilling aprons that handle heat and smoke, with pockets for your spatula, fork, brush and thermometer.", "title": "Leather BBQ & Grilling Aprons — Personalized Gifts", "meta": "Leather BBQ aprons with tool pockets, sauce-bottle sleeve and towel ring. A personalized gift every grill master will use."}};
+  var CAT_COPY = {"all": {"h1": "Leather aprons", "intro": "Handcrafted full-grain leather aprons for every trade, each one finished with solid brass hardware and ready for your logo or name.", "title": "Shop Leather Aprons | Chef, Barber, Workshop, BBQ & Artist", "meta": "Shop handcrafted full-grain leather aprons for chefs, barbers, woodworkers, artists and pitmasters. Personalize with your logo or name. Free shipping over $99."}, "chef": {"h1": "Chef aprons", "intro": "Kitchen-tough leather bibs with deep utensil pockets, knife sleeves and towel rings, built for the heat of service.", "title": "Leather Chef Aprons | Personalized Kitchen Aprons", "meta": "Leather chef aprons with utensil pockets, knife sleeves and towel rings. Full-grain leather, cross-back straps and your restaurant logo engraved on the chest."}, "barber": {"h1": "Barber aprons", "intro": "Sleek black leather with sleeves for clippers, trimmers, shears and combs. Hair brushes right off.", "title": "Leather Barber Aprons with Clipper Pockets", "meta": "Black full-grain leather barber aprons with clipper, trimmer, shear and comb pockets. Personalize with your barbershop logo."}, "workshop": {"h1": "Workshop aprons", "intro": "Heavy-duty work aprons with tool pockets, hammer loops and pencil holders for woodworkers and makers.", "title": "Leather Workshop & Woodworking Aprons", "meta": "Heavy-duty leather workshop aprons with tool pockets, hammer loop and pencil holder. Built for woodworkers, carpenters and makers."}, "artist": {"h1": "Artist aprons", "intro": "Studio aprons with tall brush pockets, a palette-knife slot and a towel ring. Paint wipes off; character stays.", "title": "Leather Artist Aprons for Painters & Potters", "meta": "Full-grain leather artist aprons with brush pockets, palette-knife slot and towel ring, for painters, potters and illustrators."}, "bbq": {"h1": "BBQ aprons", "intro": "Grilling aprons that handle heat and smoke, with pockets for your spatula, fork, brush and thermometer.", "title": "Leather BBQ & Grilling Aprons | Personalized Gifts", "meta": "Leather BBQ aprons with tool pockets, sauce-bottle sleeve and towel ring. A personalized gift every grill master will use."}};
   var CATS = [
     { id: 'all', label: 'All Aprons' }, { id: 'chef', label: 'Chef Aprons' }, { id: 'barber', label: 'Barber Aprons' },
     { id: 'workshop', label: 'Workshop Aprons' }, { id: 'artist', label: 'Artist Aprons' }, { id: 'bbq', label: 'BBQ Aprons' }
@@ -112,7 +112,7 @@
     lastFocus = document.activeElement;
     var count = cartCount();
     var sub = readCart().reduce(function (t, x) { return t + x.price * x.qty; }, 0);
-    var away = sub >= 99 ? '<p class="ap-ship ok">✓ Your order qualifies for free shipping</p>' : '<p class="ap-ship">Add ' + money(99 - sub) + ' more for free shipping</p>';
+    var away = sub >= 99 ? '<p class="ap-ship ok">This order ships free</p>' : '<p class="ap-ship">Add ' + money(99 - sub) + ' more for free shipping</p>';
     var thumb = item.photo ? '<img src="' + item.photo + '" alt="">' : apron(item.hex, item.dark, { mini: true });
     var el = document.createElement('div');
     el.id = 'added-pop'; el.className = 'added-pop'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'false'); el.setAttribute('aria-labelledby', 'ap-title');
@@ -122,7 +122,7 @@
       '<div class="ap-item"><div class="ap-thumb">' + thumb + '</div><div class="ap-info"><b>' + esc(item.name) + '</b>' +
       '<span>' + esc(item.colorName || '') + (item.text ? ' · Engraving: “' + esc(item.text) + '”' : '') + '</span>' +
       '<span>Qty ' + item.qty + ' · ' + money(item.price * item.qty) + '</span></div></div>' + away +
-      '<div class="ap-actions"><a class="btn btn-outline-dark" href="cart.html">View Cart (' + count + ')</a><a class="btn btn-primary" href="checkout.html">Checkout</a></div>' +
+      '<div class="ap-actions"><a class="btn btn-outline-dark" href="cart.html">View cart (' + count + ')</a><a class="btn btn-primary" href="checkout.html">Checkout</a></div>' +
       '<button type="button" class="ap-continue">Continue shopping</button>';
     document.body.appendChild(el);
     requestAnimationFrame(function () { el.classList.add('show'); });
@@ -135,7 +135,7 @@
     popTimer = setTimeout(closeAdded, 8000);
     $$('.badge[data-cart-count]').forEach(function (b) { b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump'); });
   }
-  function updateBadge() { $$('[data-cart-count]').forEach(function (el) { el.textContent = cartCount(); }); }
+  function updateBadge() { var n = cartCount(); $$('[data-cart-count]').forEach(function (el) { el.textContent = n; el.toggleAttribute('data-zero', !n); }); }
 
   // ---------- Icons ----------
   var I = {
@@ -171,25 +171,22 @@
     var el = $('#site-header'); if (!el) return;
     var active = document.body.getAttribute('data-page');
     var links = [
-      ['home', 'Home', 'index.html'], ['shop', 'Shop', 'shop.html', 1], ['collections', 'Collections', 'shop.html', 1],
-      ['customize', 'Customize', 'product.html', 1], ['ai', 'Design with AI', 'design-ai.html'], ['about', 'About', 'about.html'], ['contact', 'Contact', 'contact.html']
+      ['shop', 'Shop all', 'shop.html'], ['chef', 'Chef', 'shop.html?cat=chef'], ['barber', 'Barber', 'shop.html?cat=barber'],
+      ['workshop', 'Workshop', 'shop.html?cat=workshop'], ['ai', 'Personalize', 'personalize.html'], ['about', 'About', 'about.html'], ['contact', 'Contact', 'contact.html']
     ];
+    var cat = (location.search.match(/cat=(\w+)/) || [])[1];
     el.innerHTML =
-      '<div class="topbar"><div class="wrap">' +
-        '<div>' + icon('truck') + 'Free Shipping on Orders Over $99</div>' +
-        '<div>' + icon('shield') + '1-Year Craftsmanship Warranty</div>' +
-        '<div>' + icon('scissors') + 'Custom Engraving Available</div>' +
-      '</div></div>' +
+      '<div class="topbar"><div class="wrap">Free shipping on orders over $99<em> <span aria-hidden="true">/</span> Engraving proof sent before we cut</em></div></div>' +
       '<header class="site-header"><nav class="nav" aria-label="Main">' +
-        '<a class="brand" href="index.html" aria-label="Custom Leather Apron — home"><img class="brand-logo" src="assets/img/logo-light.webp" alt="Custom Leather Apron" width="900" height="334"></a>' +
+        '<a class="brand" href="index.html" aria-label="Custom Leather Apron home"><img class="brand-logo" src="assets/img/logo-light.webp" alt="Custom Leather Apron" width="900" height="334"></a>' +
         '<div class="nav-links" id="nav-links">' + links.map(function (l) {
-          return '<a href="' + l[2] + '"' + (l[0] === active ? ' class="active" aria-current="page"' : '') + '>' + l[1] + (l[3] ? icon('caret', 12) : '') + '</a>';
+          var on = l[0] === active && !(active === 'shop' && cat) || (active === 'shop' && cat === l[0]);
+          return '<a href="' + l[2] + '"' + (on ? ' class="active" aria-current="page"' : '') + '>' + l[1] + '</a>';
         }).join('') + '</div>' +
         '<div class="nav-icons">' +
-          '<button class="icon-btn menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">' + icon('menu', 24) + '</button>' +
-          '<a class="icon-btn" href="shop.html" aria-label="Search" style="color:inherit">' + icon('search', 22) + '</a>' +
-          '<a class="icon-btn" href="contact.html" aria-label="Account" style="color:inherit">' + icon('user', 22) + '</a>' +
-          '<a class="icon-btn" href="cart.html" aria-label="Cart" style="color:inherit">' + icon('cart', 24) + '<span class="badge" data-cart-count>0</span></a>' +
+          '<a class="icon-btn" href="shop.html" aria-label="Search" style="color:inherit">' + icon('search', 20) + '</a>' +
+          '<a class="icon-btn cart-link" href="cart.html" aria-label="Cart" style="color:inherit">' + icon('cart', 21) + '<span class="badge" data-cart-count>0</span></a>' +
+          '<button class="icon-btn menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">' + icon('menu', 22) + '</button>' +
         '</div>' +
       '</nav></header>';
     var t = $('.menu-toggle', el);
@@ -201,40 +198,25 @@
 
   function renderFooter() {
     var el = $('#site-footer'); if (!el) return;
-    var trust = [
-      ['truck', 'Free Shipping', 'On orders over $99'], ['shieldCheck', '1-Year Warranty', 'Against manufacturing defects'],
-      ['scissors', 'Custom Engraving', 'Add your name or logo'], ['leaf', 'Full-Grain Leather', 'With solid brass hardware'],
-      ['card', 'Proof Before Engraving', 'Approve your design first']
-    ];
     el.innerHTML =
-      '<footer class="site-footer"><div class="wrap" style="padding-top:32px">' +
-        '<div class="newsletter">' +
-          '<div style="display:flex;align-items:center;gap:24px;flex:1 1 420px;min-width:0"><span style="color:#D9954E">' + icon('mail', 40, ' stroke-width="1.4"') + '</span>' +
-            '<div><div class="serif" style="font-weight:700;font-size:24px;color:#F4EFE8">Join Our Newsletter</div><div style="color:#D8CCBF;font-size:15px">Get exclusive offers, new arrivals, and craftsmanship stories.</div></div></div>' +
-          '<form id="news-form"><label for="news-email" class="visually-hidden">Email address</label><input id="news-email" type="email" required placeholder="Enter your email address"><button type="submit">Subscribe ' + icon('arrow', 16) + '</button></form>' +
-        '</div>' +
+      '<footer class="site-footer"><div class="wrap">' +
         '<div class="f-cols">' +
-          '<div style="flex:1.4 1 280px;padding-left:0;gap:18px"><a class="brand" href="index.html" aria-label="Custom Leather Apron — home"><img class="brand-logo foot" src="assets/img/logo-light.webp" alt="Custom Leather Apron" width="900" height="334" loading="lazy"></a>' +
-            '<p style="margin:0;font-size:15px;max-width:290px">Handcrafted full-grain leather aprons for chefs, barbers, woodworkers, artists and pitmasters — personalized with your logo or name and built to last for years.</p>' +
-            '<div class="socials"><a href="#" aria-label="Instagram"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg></a><a href="#" aria-label="Facebook"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M15 3h-2a4 4 0 0 0-4 4v14M6 11h8"/></svg></a><a href="#" aria-label="YouTube"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3z" fill="currentColor"/></svg></a><a href="#" aria-label="Pinterest"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M10 21l2-9M12 12a2.5 2.5 0 1 1 2.5 2.5"/></svg></a><a href="#" aria-label="TikTok"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M14 3v12a4 4 0 1 1-4-4M14 3c0 3 2 5 5 5"/></svg></a></div></div>' +
-          '<div style="flex:1 1 160px;border-left:1px solid #3A2C22"><h4>Shop</h4>' + CATS.map(function (c) { return '<a href="shop.html?cat=' + c.id + '">' + c.label + '</a>'; }).join('') + '</div>' +
-          '<div style="flex:1 1 170px"><h4>Quick Links</h4><a href="index.html">Home</a><a href="shop.html">Shop</a><a href="shop.html">Collections</a><a href="design-ai.html">Design with AI</a><a href="about.html">About Us</a><a href="contact.html">Contact Us</a></div>' +
-          '<div style="flex:1.2 1 220px"><h4>Customer Support</h4>' +
-            [['help', 'FAQs', 'index.html#faq'], ['truck', 'Shipping Policy', 'shipping.html'], ['ret', 'Returns &amp; Refunds', 'returns.html']].map(function (x) { return '<a class="ic" href="' + x[2] + '">' + icon(x[0]) + x[1] + '</a>'; }).join('') + '</div>' +
-          '<div style="flex:1.3 1 240px;border-left:1px solid #3A2C22;padding-left:32px;gap:14px"><h4>Contact Us</h4>' +
-            '<a class="ic" href="mailto:sales@customleatherapron.com">' + icon('mail') + 'sales@customleatherapron.com</a>' +
-            '<a class="ic" href="contact.html">' + icon('help') + 'Contact form</a></div>' +
+          '<div class="f-about"><a class="brand" href="index.html" aria-label="Custom Leather Apron home"><img class="brand-logo foot" src="assets/img/logo-light.webp" alt="Custom Leather Apron" width="900" height="334" loading="lazy"></a>' +
+            '<p>Full-grain leather aprons for kitchens, barbershops, workshops and studios. Made to order, with your name or logo on the chest patch.</p>' +
+            '<form id="news-form" class="f-news"><label for="news-email">Get an email when we add new aprons</label><div><input id="news-email" type="email" required placeholder="you@example.com"><button type="submit">Sign up</button></div></form></div>' +
+          '<div><h4>Shop</h4>' + CATS.map(function (c) { return '<a href="shop.html' + (c.id === 'all' ? '' : '?cat=' + c.id) + '">' + c.label + '</a>'; }).join('') + '</div>' +
+          '<div><h4>Help</h4><a href="index.html#faq">FAQ</a><a href="shipping.html">Shipping</a><a href="returns.html">Returns &amp; refunds</a><a href="contact.html">Contact us</a><a href="contact.html?topic=bulk">Team orders</a></div>' +
+          '<div><h4>Company</h4><a href="about.html">About</a><a href="personalize.html">Personalize an apron</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div>' +
+          '<div><h4>Email</h4><a href="mailto:sales@customleatherapron.com">sales@customleatherapron.com</a><span class="f-small">We reply within one business day.</span></div>' +
         '</div>' +
-        '<div class="trust">' + trust.map(function (t) { return '<div><span style="color:#D9954E">' + icon(t[0], 34, ' stroke-width="1.3"') + '</span><div><b>' + t[1] + '</b><small>' + t[2] + '</small></div></div>'; }).join('') + '</div>' +
-        '<div class="f-bottom"><span>© ' + new Date().getFullYear() + ' Custom Leather Apron. All rights reserved.</span>' +
-          '<nav aria-label="Legal"><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a><a href="returns.html">Refund Policy</a><a href="shipping.html">Shipping Policy</a></nav>' +
-          '' +
-      '</div></footer>';
+        '<div class="f-bottom"><span>&copy; ' + new Date().getFullYear() + ' Custom Leather Apron</span>' +
+          '<nav aria-label="Legal"><a href="privacy.html">Privacy policy</a><a href="terms.html">Terms of service</a><a href="returns.html">Refund policy</a><a href="shipping.html">Shipping policy</a></nav>' +
+      '</div></div></footer>';
     $('#news-form').addEventListener('submit', function (e) {
       e.preventDefault();
       var f = this, email = $('#news-email').value.trim();
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { $('#news-email').focus(); return; }
-      var done = function () { f.innerHTML = '<div style="padding:13px 16px;color:#F4EFE8;background:#24180F;width:100%">Thanks for subscribing!</div>'; };
+      var done = function () { f.innerHTML = '<p class="f-small" style="margin:0">Thanks, you\'re on the list.</p>'; };
       if (window.CLADB) window.CLADB.subscribe(email, 'footer').then(done, done); else done();
     });
   }
@@ -246,9 +228,9 @@
     var badge = p.tags.indexOf('new') !== -1 ? 'New' : '';
     var dots = (p.colors || [p.color]).map(function (k) { return '<i style="background:' + COLORS[k].hex + '" title="' + COLORS[k].name + '"></i>'; }).join('');
     return '<a class="card" href="product.html?id=' + p.id + '">' +
-      '<div class="img">' + (badge ? '<span class="badge-tag">' + badge + '</span>' : '') + '<span class="heart">' + icon('heart', 22) + '</span>' +
+      '<div class="img">' + (badge ? '<span class="badge-tag">' + badge + '</span>' : '') + 
       (photoOf(p, p.color) ? '<img class="card-photo" src="' + photoOf(p, p.color) + '" alt="' + esc(p.name) + '" loading="lazy">' : apron(c.hex, c.dark)) +
-      '<span class="card-cta">View options →</span></div>' +
+      '</div>' +
       '<div class="card-info"><div class="name">' + esc(p.name) + '</div>' +
       '<div class="meta">' + (p.price == null ? 'Made to order' : 'Personalize with your name or logo') + '</div>' +
       '<div class="card-bottom"><div class="price">' + money(p.price) + '</div><div class="dots" aria-label="' + (p.colors || [p.color]).length + ' colours">' + dots + '</div></div></div></a>';
@@ -262,7 +244,7 @@
       var t = input.value.trim().toUpperCase() || 'YOUR NAME';
       txt.textContent = t; txt.style.fontSize = Math.min(4.4, 46 / Math.max(t.length, 6)) + 'cqw';
       patch.style.backgroundColor = BG[col]; img.src = 'assets/img/ai-logo-' + col + '.webp';
-      $('#pz-go').href = 'design-ai.html' + (input.value.trim() ? '?name=' + encodeURIComponent(input.value.trim()) : '');
+      $('#pz-go').href = 'personalize.html' + (input.value.trim() ? '?name=' + encodeURIComponent(input.value.trim()) : '');
     }
     input.addEventListener('input', draw);
     $$('[data-pz]').forEach(function (b) { b.addEventListener('click', function () {
@@ -280,7 +262,7 @@
 
   // ---------- Pages ----------
   function initHome() {
-    var tabs = [['best', 'Featured'], ['new', 'New Arrivals'], ['custom', 'Personalizable']];
+    var tabs = [['best', 'Featured'], ['new', 'New'], ['custom', 'Personalizable']];
     var cur = 'best';
     var pills = $('#featured-tabs'), grid = $('#featured-grid');
     function draw() {
@@ -406,9 +388,9 @@
     if (p.price == null) {
       var qtyBox = $('#p-qty') && $('#p-qty').closest('.qty'); if (qtyBox && qtyBox.parentElement) qtyBox.parentElement.classList.add('hidden');
       $('#p-add').classList.add('hidden');
-      var q = $('#p-buy'); q.outerHTML = '<a id="p-quote" class="btn btn-primary" href="contact.html?topic=custom">Request a Quote</a><p class="p-quote-note">Price on request — tell us the colour and engraving you want and we\'ll send you a quote.</p>';
+      var q = $('#p-buy'); q.outerHTML = '<a id="p-quote" class="btn btn-primary" href="contact.html?topic=custom">Request a quote</a><p class="p-quote-note">Price on request, tell us the colour and engraving you want and we\'ll send you a quote.</p>';
     } else {
-    $('#p-add').addEventListener('click', function () { add(false); var b = this; b.innerHTML = icon('cart') + ' Added to Cart ✓'; setTimeout(function () { b.innerHTML = icon('cart') + ' Add to Cart'; }, 2500); });
+    $('#p-add').addEventListener('click', function () { add(false); var b = this; b.innerHTML = icon('cart') + ' Added'; setTimeout(function () { b.innerHTML = icon('cart') + ' Add to cart'; }, 2500); });
     $('#p-buy').addEventListener('click', function () { add(true); location.href = 'checkout.html'; });
     }
     draw();
@@ -425,14 +407,14 @@
       $('#c-empty').classList.toggle('hidden', !!c.length); $('#c-main').classList.toggle('hidden', !c.length); $('#c-count-wrap').classList.toggle('hidden', !c.length);
       if (!c.length) { drawRecs([]); return; }
       $('#c-sub').textContent = money(sub);
-      $('#c-eng').textContent = eng ? 'Included (' + money(eng) + ')' : '—';
+      $('#c-eng').textContent = eng ? 'Included (' + money(eng) + ')' : ', ';
       $('#c-ship').textContent = ship ? money(ship) : 'Free';
       $('#c-total').textContent = money(sub + ship);
       var pct = Math.min(100, Math.round(sub / 99 * 100));
-      $('#c-progress').innerHTML = (sub >= 99 ? '<p><b>🎉 You\'ve unlocked free shipping!</b></p>' : '<p>You\'re <b>' + money(99 - sub) + '</b> away from <b>free shipping</b></p>') +
+      $('#c-progress').innerHTML = (sub >= 99 ? '<p>This order ships free.</p>' : '<p>You\'re <b>' + money(99 - sub) + '</b> away from <b>free shipping</b></p>') +
         '<div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '"><span style="width:' + pct + '%"></span></div>';
       $('#c-items').innerHTML = c.map(function (x, i) {
-        var link = x.id && x.id.indexOf('ai-') !== 0 ? 'product.html?id=' + x.id + '&color=' + x.color : 'design-ai.html';
+        var link = x.id && !/^(ai|custom)-/.test(x.id) ? 'product.html?id=' + x.id + '&color=' + x.color : 'personalize.html';
         return '<div class="cart-line">' +
           '<a class="cl-thumb" href="' + link + '">' + (x.photo ? '<img src="' + x.photo + '" alt="">' : apron(x.hex, x.dark, { mini: true })) + '</a>' +
           '<div class="cl-info"><a href="' + link + '" class="cl-name">' + esc(x.name) + '</a>' +
@@ -498,9 +480,9 @@
       var btn = form.querySelector('button[type=submit]'); btn.disabled = true;
       function show(viaEmail) {
         btn.disabled = false;
-        $('#contact-done h2').textContent = viaEmail ? 'Your message is ready' : 'Message sent — thank you!';
+        $('#contact-done h2').textContent = viaEmail ? 'Your message is ready' : 'Message sent, thank you!';
         $('#contact-done-text').innerHTML = viaEmail
-          ? 'Your email app should have opened with everything filled in — just press <b>Send</b>. If it didn\'t open, email us directly at <a href="mailto:sales@customleatherapron.com">sales@customleatherapron.com</a>.'
+          ? 'Your email app should have opened with everything filled in, just press <b>Send</b>. If it didn\'t open, email us directly at <a href="mailto:sales@customleatherapron.com">sales@customleatherapron.com</a>.'
           : 'We\'ve received your message and will reply to <b>' + esc(email) + '</b>.' + (hasFile ? ' Please email your logo file to <a href="mailto:sales@customleatherapron.com">sales@customleatherapron.com</a> with your name in the subject.' : '');
         $('#cf-file-hint').classList.toggle('hidden', !(viaEmail && hasFile));
         form.classList.add('hidden'); $('#contact-done').classList.remove('hidden');
@@ -558,7 +540,7 @@
         btn.disabled = false;
         $('#co-done-name').textContent = v('co-first'); $('#co-done-id').textContent = id; $('#co-done-email').textContent = v('co-email');
         $('#co-done-how').innerHTML = viaEmail
-          ? 'Your order <b>' + id + '</b> is ready. Your email app should have opened with all the details — just press <b>Send</b> so we receive it.'
+          ? 'Your order <b>' + id + '</b> is ready. Your email app should have opened with all the details, just press <b>Send</b> so we receive it.'
           : 'We\'ve received your order <b>' + id + '</b>. A confirmation and your secure payment link will be emailed to you.';
         $('#co-resend').classList.toggle('hidden', !viaEmail);
         $('#co-main').classList.add('hidden'); $('#co-done').classList.remove('hidden'); window.scrollTo(0, 0);
@@ -587,7 +569,7 @@
     window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
   }
 
-  // expose for the AI page
+  // shared helpers
   window.CLA = { apronSVG: apron, addToCart: addToCart, icon: icon, money: money, esc: esc, products: PRODUCTS, colors: COLORS };
 
   document.addEventListener('DOMContentLoaded', function () {

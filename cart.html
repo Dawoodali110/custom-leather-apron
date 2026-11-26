@@ -27,26 +27,26 @@
 <link rel="manifest" href="site.webmanifest">
 <!-- seo:end -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css?v=1795705193">
-<script src="assets/config.js?v=1795705193" defer></script>
-<script src="assets/db.js?v=1795705193" defer></script>
-<script src="assets/site.js?v=1795705193" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css?v=1795705890">
+<script src="assets/config.js?v=1795705890" defer></script>
+<script src="assets/db.js?v=1795705890" defer></script>
+<script src="assets/site.js?v=1795705890" defer></script>
 </head>
 <body data-page="cart">
 <div id="site-header"></div>
 <main class="wrap cart-page">
   <ol class="co-steps" aria-label="Checkout progress"><li class="current" aria-current="step"><span class="n">1</span>Cart</li><li class=""><span class="n">2</span>Details & shipping</li><li class=""><span class="n">3</span>Confirmation</li></ol>
   <div class="cart-head">
-    <h1>Shopping Cart <span id="c-count-wrap">(<span id="c-count">0 items</span>)</span></h1>
+    <h1>Cart <span id="c-count-wrap">(<span id="c-count">0 items</span>)</span></h1>
     <a href="shop.html" class="back-link">← Continue shopping</a>
   </div>
 
   <div id="c-empty" class="cart-empty hidden">
     <svg aria-hidden="true" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#8E4B22" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.6 12.4a1 1 0 0 0 1 .8h9.7a1 1 0 0 0 1-.8L21 7H6"/></svg>
     <h2>Your cart is empty</h2>
-    <p>Find a handcrafted leather apron for your trade — and make it yours with a name or logo.</p>
-    <a class="btn btn-primary" href="shop.html">Shop Leather Aprons <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <p>Find a handcrafted leather apron for your trade, and make it yours with a name or logo.</p>
+    <a class="btn btn-primary" href="shop.html">Shop aprons</a>
   </div>
 
   <div id="c-main" class="cart-layout">
@@ -55,7 +55,7 @@
       <div class="cart-table-head" aria-hidden="true"><span>Product</span><span>Price</span><span>Quantity</span><span>Total</span></div>
       <div id="c-items" aria-live="polite"></div>
       <div class="cart-panel-foot">
-        <a href="design-ai.html" class="back-link">✎ Design a custom apron</a>
+        <a href="personalize.html" class="back-link">Personalize an apron</a>
         <button type="button" id="c-clear" class="link-btn">Clear cart</button>
       </div>
     </section>
@@ -63,7 +63,7 @@
     <aside class="summary-card" aria-label="Order summary">
       <h2>Order summary</h2>
       <div class="s-row"><span>Subtotal</span><b id="c-sub">$0.00</b></div>
-      <div class="s-row"><span>Engraving</span><b id="c-eng">—</b></div>
+      <div class="s-row"><span>Engraving</span><b id="c-eng">, </b></div>
       <div class="s-row"><span>Shipping</span><b id="c-ship">Free</b></div>
       <div class="s-row muted"><span>Taxes &amp; duties</span><span>Confirmed before payment</span></div>
       <div class="s-row s-total"><span>Total</span><b id="c-total">$0.00</b></div>
