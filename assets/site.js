@@ -181,7 +181,7 @@
         '<div>' + icon('scissors') + 'Custom Engraving Available</div>' +
       '</div></div>' +
       '<header class="site-header"><nav class="nav" aria-label="Main">' +
-        '<a class="brand" href="index.html">' + LOGO + '<span>Custom<br>Leather Apron</span></a>' +
+        '<a class="brand" href="index.html" aria-label="Custom Leather Apron — home"><img class="brand-logo" src="assets/img/logo-light.webp" alt="Custom Leather Apron" width="900" height="334"></a>' +
         '<div class="nav-links" id="nav-links">' + links.map(function (l) {
           return '<a href="' + l[2] + '"' + (l[0] === active ? ' class="active" aria-current="page"' : '') + '>' + l[1] + (l[3] ? icon('caret', 12) : '') + '</a>';
         }).join('') + '</div>' +
@@ -214,7 +214,7 @@
           '<form id="news-form"><label for="news-email" class="visually-hidden">Email address</label><input id="news-email" type="email" required placeholder="Enter your email address"><button type="submit">Subscribe ' + icon('arrow', 16) + '</button></form>' +
         '</div>' +
         '<div class="f-cols">' +
-          '<div style="flex:1.4 1 280px;padding-left:0;gap:18px"><a class="brand" href="index.html">' + LOGO + '<span>Custom<br>Leather Apron</span></a>' +
+          '<div style="flex:1.4 1 280px;padding-left:0;gap:18px"><a class="brand" href="index.html" aria-label="Custom Leather Apron — home"><img class="brand-logo foot" src="assets/img/logo-light.webp" alt="Custom Leather Apron" width="900" height="334" loading="lazy"></a>' +
             '<p style="margin:0;font-size:15px;max-width:290px">Handcrafted full-grain leather aprons for chefs, barbers, woodworkers, artists and pitmasters — personalized with your logo or name and built to last for years.</p>' +
             '<div class="socials"><a href="#" aria-label="Instagram"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg></a><a href="#" aria-label="Facebook"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M15 3h-2a4 4 0 0 0-4 4v14M6 11h8"/></svg></a><a href="#" aria-label="YouTube"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3z" fill="currentColor"/></svg></a><a href="#" aria-label="Pinterest"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M10 21l2-9M12 12a2.5 2.5 0 1 1 2.5 2.5"/></svg></a><a href="#" aria-label="TikTok"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M14 3v12a4 4 0 1 1-4-4M14 3c0 3 2 5 5 5"/></svg></a></div></div>' +
           '<div style="flex:1 1 160px;border-left:1px solid #3A2C22"><h4>Shop</h4>' + CATS.map(function (c) { return '<a href="shop.html?cat=' + c.id + '">' + c.label + '</a>'; }).join('') + '</div>' +
@@ -419,19 +419,36 @@
       var c = readCart();
       var count = c.reduce(function (s, x) { return s + x.qty; }, 0);
       var sub = c.reduce(function (s, x) { return s + x.price * x.qty; }, 0);
+      var eng = c.reduce(function (s, x) { return s + (x.text ? ENGRAVE_FEE * x.qty : 0); }, 0);
       var ship = sub === 0 || sub >= 99 ? 0 : 10;
-      $('#c-count').textContent = count;
+      $('#c-count').textContent = count + (count === 1 ? ' item' : ' items');
+      $('#c-empty').classList.toggle('hidden', !!c.length); $('#c-main').classList.toggle('hidden', !c.length); $('#c-count-wrap').classList.toggle('hidden', !c.length);
+      if (!c.length) { drawRecs([]); return; }
       $('#c-sub').textContent = money(sub);
+      $('#c-eng').textContent = eng ? 'Included (' + money(eng) + ')' : '—';
       $('#c-ship').textContent = ship ? money(ship) : 'Free';
       $('#c-total').textContent = money(sub + ship);
-      $('#c-items').innerHTML = c.length ? c.map(function (x, i) {
-        return '<div class="cart-row"><div class="thumb">' + (x.photo ? '<img src="' + x.photo + '" alt="" style="height:86%;width:auto">' : apron(x.hex, x.dark, { mini: true })) + '</div>' +
-          '<div style="flex:1 1 200px;min-width:0"><div style="font-weight:600">' + esc(x.name) + '</div><div style="font-size:14px;color:var(--muted)">Color: ' + esc(x.colorName) + (x.text ? ' · Engraving: “' + esc(x.text) + '”' : '') + '</div></div>' +
-          '<div style="font-weight:600;width:90px">' + money(x.price) + '</div>' +
-          '<div class="qty"><button type="button" aria-label="Decrease quantity" data-dec="' + i + '">−</button><span>' + x.qty + '</span><button type="button" aria-label="Increase quantity" data-inc="' + i + '">+</button></div>' +
-          '<button type="button" class="icon-btn" aria-label="Remove ' + esc(x.name) + '" data-rm="' + i + '">' + icon('trash') + '</button></div>';
-      }).join('') : '<div style="padding:56px 0;text-align:center;color:var(--muted)">Your cart is empty. <a href="shop.html">Browse aprons</a></div>';
-      $('#c-checkout').classList.toggle('hidden', !c.length);
+      var pct = Math.min(100, Math.round(sub / 99 * 100));
+      $('#c-progress').innerHTML = (sub >= 99 ? '<p><b>🎉 You\'ve unlocked free shipping!</b></p>' : '<p>You\'re <b>' + money(99 - sub) + '</b> away from <b>free shipping</b></p>') +
+        '<div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '"><span style="width:' + pct + '%"></span></div>';
+      $('#c-items').innerHTML = c.map(function (x, i) {
+        var link = x.id && x.id.indexOf('ai-') !== 0 ? 'product.html?id=' + x.id + '&color=' + x.color : 'design-ai.html';
+        return '<div class="cart-line">' +
+          '<a class="cl-thumb" href="' + link + '">' + (x.photo ? '<img src="' + x.photo + '" alt="">' : apron(x.hex, x.dark, { mini: true })) + '</a>' +
+          '<div class="cl-info"><a href="' + link + '" class="cl-name">' + esc(x.name) + '</a>' +
+            '<span>Colour: ' + esc(x.colorName) + '</span>' + (x.text ? '<span class="cl-eng">Engraving: “' + esc(x.text) + '”</span>' : '') +
+            '<button type="button" class="link-btn cl-rm" data-rm="' + i + '">Remove</button></div>' +
+          '<div class="cl-price"><span class="lbl">Price</span>' + money(x.price) + '</div>' +
+          '<div class="cl-qty"><div class="qty"><button type="button" aria-label="Decrease quantity of ' + esc(x.name) + '" data-dec="' + i + '"' + (x.qty <= 1 ? ' disabled' : '') + '>−</button><span>' + x.qty + '</span><button type="button" aria-label="Increase quantity of ' + esc(x.name) + '" data-inc="' + i + '">+</button></div></div>' +
+          '<div class="cl-total"><span class="lbl">Total</span>' + money(x.price * x.qty) + '</div></div>';
+      }).join('');
+      drawRecs(c);
+    }
+    function drawRecs(c) {
+      var inCart = c.map(function (x) { return x.id; });
+      var recs = PRODUCTS.filter(function (p) { return p.price != null && inCart.indexOf(p.id) === -1; }).slice(0, 4);
+      $('#c-recs').classList.toggle('hidden', !recs.length);
+      $('#c-recs-grid').innerHTML = recs.map(card).join('');
     }
     $('#c-items').addEventListener('click', function (e) {
       var b = e.target.closest('button'); if (!b) return;
@@ -441,6 +458,7 @@
       else if (b.hasAttribute('data-rm')) c.splice(+b.getAttribute('data-rm'), 1);
       writeCart(c); draw();
     });
+    $('#c-clear').addEventListener('click', function () { writeCart([]); draw(); });
     draw();
   }
 
