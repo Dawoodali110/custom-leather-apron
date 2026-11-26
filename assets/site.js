@@ -542,6 +542,21 @@
     $('#co-resend').addEventListener('click', function () { if (mailHref) location.href = mailHref; });
   }
 
+  function initPolicy() {
+    var secs = $$('.policy-body section[id]');
+    secs.forEach(function (sec, i) {
+      var h = sec.querySelector('h2'); if (h && !h.querySelector('.sec-num')) h.insertAdjacentHTML('afterbegin', '<span class="sec-num">' + ('0' + (i + 1)).slice(-2) + '</span>');
+    });
+    var links = $$('.policy-box ol a'), bar = $('#read-bar');
+    function onScroll() {
+      var cur = secs[0];
+      secs.forEach(function (sec) { if (sec.getBoundingClientRect().top <= 160) cur = sec; });
+      links.forEach(function (a) { a.classList.toggle('active', cur && a.getAttribute('href') === '#' + cur.id); });
+      if (bar) { var r = $('.policy-body').getBoundingClientRect(), total = r.height - window.innerHeight * 0.5; bar.style.width = Math.max(0, Math.min(100, (160 - r.top) / total * 100)) + '%'; }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  }
+
   // expose for the AI page
   window.CLA = { apronSVG: apron, addToCart: addToCart, icon: icon, money: money, esc: esc };
 
@@ -555,5 +570,6 @@
     if (page === 'cart') initCart();
     if (page === 'contact') initContact();
     if (page === 'checkout') initCheckout();
+    if (page === 'policy') initPolicy();
   });
 })();
