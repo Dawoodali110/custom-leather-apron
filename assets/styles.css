@@ -599,3 +599,28 @@ a.ccard:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(40,20,8,.18
 .co-done h2{font-size:32px}.co-done p{margin:0;color:#4A3F37;line-height:1.7}
 .co-empty{text-align:center;padding:64px 0;display:flex;flex-direction:column;align-items:center;gap:14px}
 @media (max-width:700px){.row3{grid-template-columns:1fr}.co-summary{position:static;order:-1}.co-step{padding:20px}}
+
+/* ---- Added to cart popup ---- */
+.added-pop{position:fixed;top:20px;right:20px;z-index:1000;width:min(380px,calc(100vw - 32px));background:#fff;border-radius:16px;box-shadow:0 24px 60px rgba(20,12,6,.28),0 0 0 1px rgba(0,0,0,.05);padding:20px;display:flex;flex-direction:column;gap:14px;opacity:0;transform:translateY(-12px) scale(.98);transition:opacity .22s ease,transform .22s ease;color:var(--ink)}
+.added-pop.show{opacity:1;transform:none}
+.ap-head{display:flex;align-items:center;gap:10px}
+.ap-head b{flex:1;font-family:var(--serif);font-size:19px}
+.ap-check{width:26px;height:26px;border-radius:50%;background:#2F7D3A;display:flex;align-items:center;justify-content:center;flex:none}
+.ap-x{width:36px;height:36px;border:0;background:transparent;font-size:26px;line-height:1;color:var(--muted);cursor:pointer;border-radius:8px}
+.ap-x:hover{background:#F3ECE3;color:var(--ink)}
+.ap-item{display:flex;gap:14px;align-items:center;background:#F8F3EC;border-radius:12px;padding:12px}
+.ap-thumb{width:72px;height:72px;flex:none;background:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.ap-thumb img,.ap-thumb svg{height:88%;width:auto}
+.ap-info{display:flex;flex-direction:column;gap:2px;min-width:0}
+.ap-info b{font-size:15.5px}
+.ap-info span{font-size:13.5px;color:var(--muted)}
+.ap-ship{margin:0;font-size:13.5px;color:#8E4B22;background:#FBF1E6;border-radius:8px;padding:8px 12px;text-align:center}
+.ap-ship.ok{color:#2F6B2F;background:#EEF6EC}
+.ap-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ap-actions .btn{height:48px;font-size:15px;padding:0 10px}
+.ap-continue{border:0;background:transparent;color:var(--muted);font-size:14px;text-decoration:underline;cursor:pointer;align-self:center;padding:4px}
+.badge.bump{animation:bump .5s ease}
+@keyframes bump{0%{transform:scale(1)}40%{transform:scale(1.45)}100%{transform:scale(1)}}
+@media (max-width:600px){.added-pop{top:auto;bottom:12px;right:12px;left:12px;width:auto}}
+@media (prefers-reduced-motion:reduce){.added-pop,.badge.bump{transition:none;animation:none}}
+.p-quote-note{margin:0;font-size:14px;color:var(--muted)}

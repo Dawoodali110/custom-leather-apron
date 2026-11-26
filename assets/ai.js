@@ -230,8 +230,7 @@ document.addEventListener('DOMContentLoaded', function () {
   $('#ref-upload').addEventListener('change', function () { if (this.files[0]) $('#status').textContent = 'Reference image added: ' + this.files[0].name; });
   $('#ai-add').addEventListener('click', function () {
     var c = find(COLORS, st.d.color), s = find(STYLES, st.d.style);
-    window.CLA.addToCart({ id: 'ai-' + Date.now(), name: 'Custom ' + s.label + ' Apron', color: c.id, colorName: c.name + ', ' + find(FINISHES, st.d.finish).label, hex: c.hex, dark: c.dark, price: 119 + (st.d.text ? 15 : 0), qty: 1, text: st.d.text });
-    location.href = 'cart.html';
+    window.CLA.addToCart({ id: 'ai-' + Date.now(), name: 'Custom ' + s.label + ' Apron', color: c.id, colorName: c.name + ', ' + find(FINISHES, st.d.finish).label, hex: c.hex, dark: c.dark, price: 119 + (st.d.text ? 15 : 0), qty: 1, text: st.d.text, photo: photoKey(st.d) ? PHOTOS[photoKey(st.d)].src : '' });
   });
 
   $('#chips').innerHTML = PRESETS.map(function (p, i) {

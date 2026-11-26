@@ -96,6 +96,44 @@
     var same = c.filter(function (x) { return x.id === item.id && x.color === item.color && (x.text || '') === (item.text || ''); })[0];
     if (same) same.qty = Math.min(20, same.qty + item.qty); else c.push(item);
     writeCart(c);
+    if (!item.silent) showAdded(item);
+  }
+
+  // ---------- "Added to cart" popup ----------
+  var popTimer, lastFocus;
+  function closeAdded() {
+    var el = document.getElementById('added-pop'); if (!el) return;
+    el.classList.remove('show'); clearTimeout(popTimer);
+    setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 250);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  function showAdded(item) {
+    var old = document.getElementById('added-pop'); if (old) old.parentNode.removeChild(old);
+    lastFocus = document.activeElement;
+    var count = cartCount();
+    var sub = readCart().reduce(function (t, x) { return t + x.price * x.qty; }, 0);
+    var away = sub >= 99 ? '<p class="ap-ship ok">✓ Your order qualifies for free shipping</p>' : '<p class="ap-ship">Add ' + money(99 - sub) + ' more for free shipping</p>';
+    var thumb = item.photo ? '<img src="' + item.photo + '" alt="">' : apron(item.hex, item.dark, { mini: true });
+    var el = document.createElement('div');
+    el.id = 'added-pop'; el.className = 'added-pop'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'false'); el.setAttribute('aria-labelledby', 'ap-title');
+    el.innerHTML =
+      '<div class="ap-head"><span class="ap-check" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg></span>' +
+      '<b id="ap-title">Added to your cart</b><button type="button" class="ap-x" aria-label="Close">×</button></div>' +
+      '<div class="ap-item"><div class="ap-thumb">' + thumb + '</div><div class="ap-info"><b>' + esc(item.name) + '</b>' +
+      '<span>' + esc(item.colorName || '') + (item.text ? ' · Engraving: “' + esc(item.text) + '”' : '') + '</span>' +
+      '<span>Qty ' + item.qty + ' · ' + money(item.price * item.qty) + '</span></div></div>' + away +
+      '<div class="ap-actions"><a class="btn btn-outline-dark" href="cart.html">View Cart (' + count + ')</a><a class="btn btn-primary" href="checkout.html">Checkout</a></div>' +
+      '<button type="button" class="ap-continue">Continue shopping</button>';
+    document.body.appendChild(el);
+    requestAnimationFrame(function () { el.classList.add('show'); });
+    el.querySelector('.ap-x').addEventListener('click', closeAdded);
+    el.querySelector('.ap-continue').addEventListener('click', closeAdded);
+    el.addEventListener('mouseenter', function () { clearTimeout(popTimer); });
+    el.addEventListener('mouseleave', function () { popTimer = setTimeout(closeAdded, 4000); });
+    el.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAdded(); });
+    el.querySelector('.ap-actions .btn-primary').focus({ preventScroll: true });
+    popTimer = setTimeout(closeAdded, 8000);
+    $$('.badge[data-cart-count]').forEach(function (b) { b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump'); });
   }
   function updateBadge() { $$('[data-cart-count]').forEach(function (el) { el.textContent = cartCount(); }); }
 
@@ -361,12 +399,18 @@
     $('#p-dec').addEventListener('click', function () { st.qty = Math.max(1, st.qty - 1); draw(); });
     $('#p-inc').addEventListener('click', function () { st.qty = Math.min(20, st.qty + 1); draw(); });
     $$('.tabs button').forEach(function (b) { b.addEventListener('click', function () { st.tab = b.getAttribute('data-tab'); draw(); }); });
-    function add() {
+    function add(silent) {
       var c = COLORS[st.color];
-      addToCart({ id: p.id, name: p.name, color: st.color, colorName: c.name, hex: c.hex, dark: c.dark, price: price() || 0, qty: st.qty, text: st.text.trim(), photo: photoOf(p, st.color) || '' });
+      addToCart({ id: p.id, name: p.name, color: st.color, colorName: c.name, hex: c.hex, dark: c.dark, price: price() || 0, qty: st.qty, text: st.text.trim(), photo: photoOf(p, st.color) || '', silent: !!silent });
     }
-    $('#p-add').addEventListener('click', function () { add(); this.innerHTML = icon('cart') + ' Added to Cart ✓'; });
-    $('#p-buy').addEventListener('click', function () { add(); location.href = 'cart.html'; });
+    if (p.price == null) {
+      var qtyBox = $('#p-qty') && $('#p-qty').closest('.qty'); if (qtyBox && qtyBox.parentElement) qtyBox.parentElement.classList.add('hidden');
+      $('#p-add').classList.add('hidden');
+      var q = $('#p-buy'); q.outerHTML = '<a id="p-quote" class="btn btn-primary" href="contact.html?topic=custom">Request a Quote</a><p class="p-quote-note">Price on request — tell us the colour and engraving you want and we\'ll send you a quote.</p>';
+    } else {
+    $('#p-add').addEventListener('click', function () { add(false); var b = this; b.innerHTML = icon('cart') + ' Added to Cart ✓'; setTimeout(function () { b.innerHTML = icon('cart') + ' Add to Cart'; }, 2500); });
+    $('#p-buy').addEventListener('click', function () { add(true); location.href = 'checkout.html'; });
+    }
     draw();
   }
 
