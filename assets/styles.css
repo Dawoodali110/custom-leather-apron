@@ -300,3 +300,30 @@ textarea.input{height:auto;padding:12px 14px;resize:vertical}
 .how .step img{display:block;width:100%;height:auto;aspect-ratio:600/330;object-fit:cover;border-radius:12px;margin-top:auto;transition:transform .5s}
 .how .step:hover img{transform:scale(1.03)}
 .how .step{overflow:hidden}
+
+/* ---- SEO copy blocks ---- */
+.section-lede{margin:16px auto 0;max-width:620px;color:var(--muted);font-size:17px}
+.seo-copy h2{font-size:clamp(30px,3.4vw,42px);margin-bottom:18px}
+.seo-copy h3{font-size:20px;margin:0 0 6px}
+.seo-copy p{color:#4A3F37;font-size:16.5px;line-height:1.75;margin:0 0 16px}
+.seo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:64px;align-items:start}
+.seo-grid .eyebrow{margin-bottom:12px}
+.seo-points{background:#fff;border:1px solid var(--line);border-radius:16px;padding:32px}
+.seo-points p{font-size:15.5px}
+.shop-guide{margin-top:88px;padding-top:56px;border-top:1px solid var(--line)}
+.guide-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 36px;margin-top:12px}
+.guide-grid p{font-size:15.5px;margin:0}
+.ai-copy{padding:8px 0 96px;border-top:1px solid var(--dline);margin-top:8px}
+.ai-copy h2{color:var(--cream);margin-top:56px}
+.ai-copy h3{color:var(--cream)}
+.ai-copy p{color:#CFC3B4}
+.p-long p{margin:0 0 14px;line-height:1.75}
+.p-long h3{font-size:20px;margin:22px 0 10px;color:var(--ink)}
+.p-features{margin:0 0 16px;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 24px}
+.p-features li{display:flex;gap:10px;align-items:flex-start}
+.p-features li::before{content:"";flex:none;width:18px;height:18px;margin-top:4px;border-radius:50%;background:#8E4B22 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center/11px no-repeat}
+.p-best{color:var(--ink)}
+.p-specs{display:grid;grid-template-columns:200px minmax(0,1fr);gap:12px 24px;margin:0}
+.p-specs dt{font-weight:600;color:var(--ink)}
+.p-specs dd{margin:0}
+@media (max-width:900px){.seo-grid,.guide-grid{grid-template-columns:1fr;gap:28px}.p-features{grid-template-columns:1fr}.p-specs{grid-template-columns:130px minmax(0,1fr)}}

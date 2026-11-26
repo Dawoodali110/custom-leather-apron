@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dawoodali110.github.io/custom-leather-apron/sitemap.xml
