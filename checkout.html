@@ -28,8 +28,10 @@
 <!-- seo:end -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css?v=1795698671">
-<script src="assets/site.js?v=1795698671" defer></script>
+<link rel="stylesheet" href="assets/styles.css?v=1795705193">
+<script src="assets/config.js?v=1795705193" defer></script>
+<script src="assets/db.js?v=1795705193" defer></script>
+<script src="assets/site.js?v=1795705193" defer></script>
 </head>
 <body data-page="checkout">
 <div id="site-header"></div>
@@ -85,7 +87,7 @@
       <label class="co-check"><input type="checkbox" id="co-terms" required><span>I agree to the <a href="terms.html" target="_blank">Terms of Service</a>, <a href="returns.html" target="_blank">Returns &amp; Refunds</a> and <a href="privacy.html" target="_blank">Privacy Policy</a>.</span></label>
       <p id="co-error" class="cf-error hidden" role="alert"></p>
       <button type="submit" class="btn btn-primary co-submit"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> Place Order · <span id="co-btn-total">$0.00</span></button>
-      <p class="cf-small">Placing your order opens your email app with your order details ready to send.</p>
+      <p class="cf-small">No payment is taken now — we email you a secure payment link after confirming your order.</p>
     </form>
 
     <aside class="co-summary summary-card" aria-label="Order summary">
@@ -106,8 +108,8 @@
   <section id="co-done" class="hidden co-done" role="status">
     <svg aria-hidden="true" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#8E4B22" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
     <h2>Thank you, <span id="co-done-name"></span>!</h2>
-    <p>Your order <b id="co-done-id"></b> is ready. Your email app should have opened with all the details — just press <b>Send</b> so we receive it.</p>
-    <p>We'll reply to <b id="co-done-email"></b> to confirm your order and send your secure payment link. If your email app didn't open, email your order number to <a href="mailto:sales@customleatherapron.com">sales@customleatherapron.com</a>.</p>
+    <p id="co-done-how"></p><span id="co-done-id" hidden></span>
+    <p>We'll reply to <b id="co-done-email"></b> to confirm your engraving and shipping details. Questions? Email <a href="mailto:sales@customleatherapron.com">sales@customleatherapron.com</a>.</p>
     <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:8px"><a class="btn btn-primary" href="shop.html">Continue Shopping <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><button type="button" id="co-resend" class="btn btn-outline-dark">Open email again</button></div>
   </section>
 </main>

@@ -232,7 +232,10 @@
       '</div></footer>';
     $('#news-form').addEventListener('submit', function (e) {
       e.preventDefault();
-      this.innerHTML = '<div style="padding:13px 16px;color:#F4EFE8;background:#24180F;width:100%">Thanks for subscribing!</div>';
+      var f = this, email = $('#news-email').value.trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { $('#news-email').focus(); return; }
+      var done = function () { f.innerHTML = '<div style="padding:13px 16px;color:#F4EFE8;background:#24180F;width:100%">Thanks for subscribing!</div>'; };
+      if (window.CLADB) window.CLADB.subscribe(email, 'footer').then(done, done); else done();
     });
   }
 
@@ -488,8 +491,23 @@
       lines.push('', msg);
       var hasFile = !!$('#cf-file').files[0];
       if (hasFile) lines.push('', '(I will attach my logo file: ' + $('#cf-file').files[0].name + ')');
-      location.href = 'mailto:sales@customleatherapron.com?subject=' + encodeURIComponent(t + ' — ' + name) + '&body=' + encodeURIComponent(lines.join('\n'));
-      form.classList.add('hidden'); $('#contact-done').classList.remove('hidden'); $('#cf-file-hint').classList.toggle('hidden', !hasFile);
+      var mail = 'mailto:sales@customleatherapron.com?subject=' + encodeURIComponent(t + ' — ' + name) + '&body=' + encodeURIComponent(lines.join('\n'));
+      var row = { name: name, email: email, phone: $('#cf-phone').value.trim() || null, topic: t,
+        business: topic.value === 'bulk' ? ($('#cf-biz').value.trim() || null) : null, quantity: topic.value === 'bulk' ? $('#cf-qty').value : null,
+        order_no: topic.value === 'support' ? ($('#cf-order').value.trim() || null) : null, message: msg, attachment_name: hasFile ? $('#cf-file').files[0].name : null };
+      var btn = form.querySelector('button[type=submit]'); btn.disabled = true;
+      function show(viaEmail) {
+        btn.disabled = false;
+        $('#contact-done h2').textContent = viaEmail ? 'Your message is ready' : 'Message sent — thank you!';
+        $('#contact-done-text').innerHTML = viaEmail
+          ? 'Your email app should have opened with everything filled in — just press <b>Send</b>. If it didn\'t open, email us directly at <a href="mailto:sales@customleatherapron.com">sales@customleatherapron.com</a>.'
+          : 'We\'ve received your message and will reply to <b>' + esc(email) + '</b>.' + (hasFile ? ' Please email your logo file to <a href="mailto:sales@customleatherapron.com">sales@customleatherapron.com</a> with your name in the subject.' : '');
+        $('#cf-file-hint').classList.toggle('hidden', !(viaEmail && hasFile));
+        form.classList.add('hidden'); $('#contact-done').classList.remove('hidden');
+      }
+      var db = window.CLADB;
+      if (db && db.live) db.submitMessage(row).then(function () { show(false); }, function () { location.href = mail; show(true); });
+      else { if (db) db.submitMessage(row); location.href = mail; show(true); }
     });
     $('#cf-again').addEventListener('click', function () { form.reset(); syncTopic(); $('#cf-file-name').textContent = 'Choose a PNG, JPG, SVG or PDF'; $('#contact-done').classList.add('hidden'); form.classList.remove('hidden'); });
   }
@@ -531,10 +549,25 @@
         .concat(['', 'Subtotal: ' + money(sub), 'Shipping: ' + (sc === 0 ? 'Free' : sc == null ? 'To be quoted' : money(sc)), 'Total: ' + money(sub + (sc || 0)) + (sc == null ? ' + shipping' : ''),
           v('co-notes') ? '\nNotes: ' + v('co-notes') : '', $('#co-news').checked ? 'Newsletter: yes' : '', '', 'Please send me the secure payment link for this order.']);
       mailHref = 'mailto:sales@customleatherapron.com?subject=' + encodeURIComponent('Order ' + id + ' — ' + v('co-first') + ' ' + v('co-last')) + '&body=' + encodeURIComponent(lines.join('\n'));
-      location.href = mailHref;
-      $('#co-done-name').textContent = v('co-first'); $('#co-done-id').textContent = id; $('#co-done-email').textContent = v('co-email');
-      $('#co-main').classList.add('hidden'); $('#co-done').classList.remove('hidden'); window.scrollTo(0, 0);
-      writeCart([]);
+      var order = { order_no: id, email: v('co-email'), phone: v('co-phone') || null, first_name: v('co-first'), last_name: v('co-last'), company: v('co-company') || null,
+        address1: v('co-addr1'), address2: v('co-addr2') || null, city: v('co-city'), state: v('co-state') || null, zip: v('co-zip'), country: $('#co-country').value,
+        items: cart.map(function (x) { return { id: x.id, name: x.name, color: x.colorName, engraving: x.text || '', qty: x.qty, price: x.price, photo: x.photo || '' }; }),
+        subtotal: +sub.toFixed(2), shipping: sc == null ? null : sc, total: +(sub + (sc || 0)).toFixed(2), notes: v('co-notes') || null, newsletter: $('#co-news').checked };
+      var btn = this.querySelector('button[type=submit]'); btn.disabled = true;
+      function finish(viaEmail) {
+        btn.disabled = false;
+        $('#co-done-name').textContent = v('co-first'); $('#co-done-id').textContent = id; $('#co-done-email').textContent = v('co-email');
+        $('#co-done-how').innerHTML = viaEmail
+          ? 'Your order <b>' + id + '</b> is ready. Your email app should have opened with all the details — just press <b>Send</b> so we receive it.'
+          : 'We\'ve received your order <b>' + id + '</b>. A confirmation and your secure payment link will be emailed to you.';
+        $('#co-resend').classList.toggle('hidden', !viaEmail);
+        $('#co-main').classList.add('hidden'); $('#co-done').classList.remove('hidden'); window.scrollTo(0, 0);
+        writeCart([]);
+      }
+      var db = window.CLADB;
+      if (order.newsletter && db) db.subscribe(order.email, 'checkout');
+      if (db && db.live) db.submitOrder(order).then(function () { finish(false); }, function () { location.href = mailHref; finish(true); });
+      else { if (db) db.submitOrder(order); location.href = mailHref; finish(true); }
     });
     $('#co-resend').addEventListener('click', function () { if (mailHref) location.href = mailHref; });
   }
@@ -555,7 +588,7 @@
   }
 
   // expose for the AI page
-  window.CLA = { apronSVG: apron, addToCart: addToCart, icon: icon, money: money, esc: esc };
+  window.CLA = { apronSVG: apron, addToCart: addToCart, icon: icon, money: money, esc: esc, products: PRODUCTS, colors: COLORS };
 
   document.addEventListener('DOMContentLoaded', function () {
     renderHeader(); renderFooter(); updateBadge();
