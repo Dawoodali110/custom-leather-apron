@@ -374,11 +374,38 @@
   }
 
   function initContact() {
-    $('#contact-form').addEventListener('submit', function (e) {
-      e.preventDefault();
-      $('#contact-form').classList.add('hidden');
-      $('#contact-done').classList.remove('hidden');
+    var form = $('#contact-form'), topic = $('#cf-topic');
+    function syncTopic() {
+      var t = topic.value;
+      $$('.bulk-only').forEach(function (el) { el.classList.toggle('hidden', t !== 'bulk'); });
+      $$('.order-only').forEach(function (el) { el.classList.toggle('hidden', t !== 'support'); });
+      $$('.topic').forEach(function (b) { var on = b.getAttribute('data-topic') === t; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
+    }
+    $$('.topic').forEach(function (b) {
+      b.addEventListener('click', function () { topic.value = b.getAttribute('data-topic'); syncTopic(); $('#cf-name').focus(); form.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
     });
+    var pre = new URLSearchParams(location.search).get('topic'); if (pre && topic.querySelector('option[value="' + pre + '"]')) topic.value = pre;
+    topic.addEventListener('change', syncTopic); syncTopic();
+    $('#cf-file').addEventListener('change', function () { $('#cf-file-name').textContent = this.files[0] ? this.files[0].name : 'Choose a PNG, JPG, SVG or PDF'; });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name = $('#cf-name').value.trim(), email = $('#cf-email').value.trim(), msg = $('#cf-msg').value.trim(), err = $('#cf-error');
+      var problem = !name ? 'Please add your name.' : !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'Please enter a valid email address.' : !msg ? 'Please write a short message.' : '';
+      if (problem) { err.textContent = problem; err.classList.remove('hidden'); return; }
+      err.classList.add('hidden');
+      var t = topic.options[topic.selectedIndex].text;
+      var lines = ['Name: ' + name, 'Email: ' + email];
+      if ($('#cf-phone').value.trim()) lines.push('Phone: ' + $('#cf-phone').value.trim());
+      lines.push('Topic: ' + t);
+      if (topic.value === 'bulk') { if ($('#cf-biz').value.trim()) lines.push('Business: ' + $('#cf-biz').value.trim()); lines.push('Quantity: ' + $('#cf-qty').value); }
+      if (topic.value === 'support' && $('#cf-order').value.trim()) lines.push('Order number: ' + $('#cf-order').value.trim());
+      lines.push('', msg);
+      var hasFile = !!$('#cf-file').files[0];
+      if (hasFile) lines.push('', '(I will attach my logo file: ' + $('#cf-file').files[0].name + ')');
+      location.href = 'mailto:support@customleatherapron.com?subject=' + encodeURIComponent(t + ' — ' + name) + '&body=' + encodeURIComponent(lines.join('\n'));
+      form.classList.add('hidden'); $('#contact-done').classList.remove('hidden'); $('#cf-file-hint').classList.toggle('hidden', !hasFile);
+    });
+    $('#cf-again').addEventListener('click', function () { form.reset(); syncTopic(); $('#cf-file-name').textContent = 'Choose a PNG, JPG, SVG or PDF'; $('#contact-done').classList.add('hidden'); form.classList.remove('hidden'); });
   }
 
   // expose for the AI page
