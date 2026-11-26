@@ -327,3 +327,8 @@ textarea.input{height:auto;padding:12px 14px;resize:vertical}
 .p-specs dt{font-weight:600;color:var(--ink)}
 .p-specs dd{margin:0}
 @media (max-width:900px){.seo-grid,.guide-grid{grid-template-columns:1fr;gap:28px}.p-features{grid-template-columns:1fr}.p-specs{grid-template-columns:130px minmax(0,1fr)}}
+@media (max-width:600px){
+  section[aria-label="Apron preview"]>div[style*="bottom:18px"]{left:12px!important;right:12px!important;gap:6px!important}
+  section[aria-label="Apron preview"] .round{width:40px;height:40px;flex:none}
+  #spin{padding:0 12px!important;font-size:13px!important}
+}
