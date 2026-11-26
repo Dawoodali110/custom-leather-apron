@@ -185,7 +185,7 @@
             [['help', 'FAQs', 'index.html#faq'], ['truck', 'Shipping Policy', 'shipping.html'], ['ret', 'Returns &amp; Refunds', 'returns.html'], ['shieldCheck', 'Warranty', 'returns.html#warranty'], ['card', 'Payment Methods', 'terms.html#payment'], ['headset', 'Contact Support', 'contact.html']].map(function (x) { return '<a class="ic" href="' + x[2] + '">' + icon(x[0]) + x[1] + '</a>'; }).join('') + '</div>' +
           '<div style="flex:1.3 1 240px;border-left:1px solid #3A2C22;padding-left:32px;gap:14px"><h4>Contact Us</h4>' +
             '<a class="ic" href="tel:+15551234567">' + icon('phone') + '+1 (555) 123-4567</a>' +
-            '<a class="ic" href="mailto:support@customleatherapron.com">' + icon('mail') + 'support@customleatherapron.com</a>' +
+            '<a class="ic" href="mailto:sales@customleatherapron.com">' + icon('mail') + 'sales@customleatherapron.com</a>' +
             '<div class="ic">' + icon('pin') + 'Austin, TX, USA</div></div>' +
         '</div>' +
         '<div class="trust">' + trust.map(function (t) { return '<div><span style="color:#D9954E">' + icon(t[0], 34, ' stroke-width="1.3"') + '</span><div><b>' + t[1] + '</b><small>' + t[2] + '</small></div></div>'; }).join('') + '</div>' +
@@ -429,7 +429,7 @@
       lines.push('', msg);
       var hasFile = !!$('#cf-file').files[0];
       if (hasFile) lines.push('', '(I will attach my logo file: ' + $('#cf-file').files[0].name + ')');
-      location.href = 'mailto:support@customleatherapron.com?subject=' + encodeURIComponent(t + ' — ' + name) + '&body=' + encodeURIComponent(lines.join('\n'));
+      location.href = 'mailto:sales@customleatherapron.com?subject=' + encodeURIComponent(t + ' — ' + name) + '&body=' + encodeURIComponent(lines.join('\n'));
       form.classList.add('hidden'); $('#contact-done').classList.remove('hidden'); $('#cf-file-hint').classList.toggle('hidden', !hasFile);
     });
     $('#cf-again').addEventListener('click', function () { form.reset(); syncTopic(); $('#cf-file-name').textContent = 'Choose a PNG, JPG, SVG or PDF'; $('#contact-done').classList.add('hidden'); form.classList.remove('hidden'); });
@@ -471,7 +471,7 @@
         'Items:'].concat(cart.map(function (x) { return '- ' + x.qty + ' x ' + x.name + ' (' + x.colorName + ')' + (x.text ? ' — engraving: "' + x.text + '"' : '') + ' — ' + money(x.price * x.qty); }))
         .concat(['', 'Subtotal: ' + money(sub), 'Shipping: ' + (sc === 0 ? 'Free' : sc == null ? 'To be quoted' : money(sc)), 'Total: ' + money(sub + (sc || 0)) + (sc == null ? ' + shipping' : ''),
           v('co-notes') ? '\nNotes: ' + v('co-notes') : '', $('#co-news').checked ? 'Newsletter: yes' : '', '', 'Please send me the secure payment link for this order.']);
-      mailHref = 'mailto:support@customleatherapron.com?subject=' + encodeURIComponent('Order ' + id + ' — ' + v('co-first') + ' ' + v('co-last')) + '&body=' + encodeURIComponent(lines.join('\n'));
+      mailHref = 'mailto:sales@customleatherapron.com?subject=' + encodeURIComponent('Order ' + id + ' — ' + v('co-first') + ' ' + v('co-last')) + '&body=' + encodeURIComponent(lines.join('\n'));
       location.href = mailHref;
       $('#co-done-name').textContent = v('co-first'); $('#co-done-id').textContent = id; $('#co-done-email').textContent = v('co-email');
       $('#co-main').classList.add('hidden'); $('#co-done').classList.remove('hidden'); window.scrollTo(0, 0);
