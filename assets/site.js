@@ -182,7 +182,7 @@
           '<div style="flex:1 1 160px;border-left:1px solid #3A2C22"><h4>Shop</h4>' + CATS.map(function (c) { return '<a href="shop.html?cat=' + c.id + '">' + c.label + '</a>'; }).join('') + '</div>' +
           '<div style="flex:1 1 170px"><h4>Quick Links</h4><a href="index.html">Home</a><a href="shop.html">Shop</a><a href="shop.html">Collections</a><a href="design-ai.html">Design with AI</a><a href="about.html">About Us</a><a href="contact.html">Contact Us</a></div>' +
           '<div style="flex:1.2 1 220px"><h4>Customer Support</h4>' +
-            [['help', 'FAQs', 'index.html#faq'], ['truck', 'Shipping Policy', 'shipping.html'], ['ret', 'Returns &amp; Refunds', 'returns.html'], ['shieldCheck', 'Warranty', 'returns.html#warranty'], ['card', 'Payment Methods', 'terms.html#payment'], ['headset', 'Contact Support', 'contact.html']].map(function (x) { return '<a class="ic" href="' + x[2] + '">' + icon(x[0]) + x[1] + '</a>'; }).join('') + '</div>' +
+            [['help', 'FAQs', 'index.html#faq'], ['truck', 'Shipping Policy', 'shipping.html'], ['ret', 'Returns &amp; Refunds', 'returns.html']].map(function (x) { return '<a class="ic" href="' + x[2] + '">' + icon(x[0]) + x[1] + '</a>'; }).join('') + '</div>' +
           '<div style="flex:1.3 1 240px;border-left:1px solid #3A2C22;padding-left:32px;gap:14px"><h4>Contact Us</h4>' +
             '<a class="ic" href="tel:+15551234567">' + icon('phone') + '+1 (555) 123-4567</a>' +
             '<a class="ic" href="mailto:sales@customleatherapron.com">' + icon('mail') + 'sales@customleatherapron.com</a>' +
