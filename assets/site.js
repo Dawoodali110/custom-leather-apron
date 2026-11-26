@@ -182,7 +182,7 @@
           '<div style="flex:1 1 160px;border-left:1px solid #3A2C22"><h4>Shop</h4>' + CATS.map(function (c) { return '<a href="shop.html?cat=' + c.id + '">' + c.label + '</a>'; }).join('') + '</div>' +
           '<div style="flex:1 1 170px"><h4>Quick Links</h4><a href="index.html">Home</a><a href="shop.html">Shop</a><a href="shop.html">Collections</a><a href="design-ai.html">Design with AI</a><a href="about.html">About Us</a><a href="contact.html">Contact Us</a></div>' +
           '<div style="flex:1.2 1 220px"><h4>Customer Support</h4>' +
-            [['help', 'FAQs'], ['truck', 'Shipping &amp; Delivery'], ['ret', 'Returns &amp; Exchanges'], ['shieldCheck', 'Warranty'], ['card', 'Payment Methods'], ['headset', 'Contact Support']].map(function (x) { return '<a class="ic" href="contact.html">' + icon(x[0]) + x[1] + '</a>'; }).join('') + '</div>' +
+            [['help', 'FAQs', 'index.html#faq'], ['truck', 'Shipping Policy', 'shipping.html'], ['ret', 'Returns &amp; Refunds', 'returns.html'], ['shieldCheck', 'Warranty', 'returns.html#warranty'], ['card', 'Payment Methods', 'terms.html#payment'], ['headset', 'Contact Support', 'contact.html']].map(function (x) { return '<a class="ic" href="' + x[2] + '">' + icon(x[0]) + x[1] + '</a>'; }).join('') + '</div>' +
           '<div style="flex:1.3 1 240px;border-left:1px solid #3A2C22;padding-left:32px;gap:14px"><h4>Contact Us</h4>' +
             '<a class="ic" href="tel:+15551234567">' + icon('phone') + '+1 (555) 123-4567</a>' +
             '<a class="ic" href="mailto:support@customleatherapron.com">' + icon('mail') + 'support@customleatherapron.com</a>' +
@@ -190,7 +190,7 @@
         '</div>' +
         '<div class="trust">' + trust.map(function (t) { return '<div><span style="color:#D9954E">' + icon(t[0], 34, ' stroke-width="1.3"') + '</span><div><b>' + t[1] + '</b><small>' + t[2] + '</small></div></div>'; }).join('') + '</div>' +
         '<div class="f-bottom"><span>© ' + new Date().getFullYear() + ' Custom Leather Apron. All rights reserved.</span>' +
-          '<nav aria-label="Legal"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a><a href="#">Refund Policy</a></nav>' +
+          '<nav aria-label="Legal"><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a><a href="returns.html">Refund Policy</a><a href="shipping.html">Shipping Policy</a></nav>' +
           '<div class="pay" aria-label="Accepted payment methods"><span>Visa</span><span>Mastercard</span><span>Amex</span><span>PayPal</span><span>Apple Pay</span></div></div>' +
       '</div></footer>';
     $('#news-form').addEventListener('submit', function (e) {
@@ -363,7 +363,7 @@
     $$('.tabs button').forEach(function (b) { b.addEventListener('click', function () { st.tab = b.getAttribute('data-tab'); draw(); }); });
     function add() {
       var c = COLORS[st.color];
-      addToCart({ id: p.id, name: p.name, color: st.color, colorName: c.name, hex: c.hex, dark: c.dark, price: price() || 0, qty: st.qty, text: st.text.trim() });
+      addToCart({ id: p.id, name: p.name, color: st.color, colorName: c.name, hex: c.hex, dark: c.dark, price: price() || 0, qty: st.qty, text: st.text.trim(), photo: photoOf(p, st.color) || '' });
     }
     $('#p-add').addEventListener('click', function () { add(); this.innerHTML = icon('cart') + ' Added to Cart ✓'; });
     $('#p-buy').addEventListener('click', function () { add(); location.href = 'cart.html'; });
@@ -381,13 +381,13 @@
       $('#c-ship').textContent = ship ? money(ship) : 'Free';
       $('#c-total').textContent = money(sub + ship);
       $('#c-items').innerHTML = c.length ? c.map(function (x, i) {
-        return '<div class="cart-row"><div class="thumb">' + apron(x.hex, x.dark, { mini: true }) + '</div>' +
+        return '<div class="cart-row"><div class="thumb">' + (x.photo ? '<img src="' + x.photo + '" alt="" style="height:86%;width:auto">' : apron(x.hex, x.dark, { mini: true })) + '</div>' +
           '<div style="flex:1 1 200px;min-width:0"><div style="font-weight:600">' + esc(x.name) + '</div><div style="font-size:14px;color:var(--muted)">Color: ' + esc(x.colorName) + (x.text ? ' · Engraving: “' + esc(x.text) + '”' : '') + '</div></div>' +
           '<div style="font-weight:600;width:90px">' + money(x.price) + '</div>' +
           '<div class="qty"><button type="button" aria-label="Decrease quantity" data-dec="' + i + '">−</button><span>' + x.qty + '</span><button type="button" aria-label="Increase quantity" data-inc="' + i + '">+</button></div>' +
           '<button type="button" class="icon-btn" aria-label="Remove ' + esc(x.name) + '" data-rm="' + i + '">' + icon('trash') + '</button></div>';
       }).join('') : '<div style="padding:56px 0;text-align:center;color:var(--muted)">Your cart is empty. <a href="shop.html">Browse aprons</a></div>';
-      $('#c-checkout').disabled = !c.length;
+      $('#c-checkout').classList.toggle('hidden', !c.length);
     }
     $('#c-items').addEventListener('click', function (e) {
       var b = e.target.closest('button'); if (!b) return;
@@ -397,7 +397,6 @@
       else if (b.hasAttribute('data-rm')) c.splice(+b.getAttribute('data-rm'), 1);
       writeCart(c); draw();
     });
-    $('#c-checkout').addEventListener('click', function () { $('#c-note').classList.remove('hidden'); });
     draw();
   }
 
@@ -436,6 +435,51 @@
     $('#cf-again').addEventListener('click', function () { form.reset(); syncTopic(); $('#cf-file-name').textContent = 'Choose a PNG, JPG, SVG or PDF'; $('#contact-done').classList.add('hidden'); form.classList.remove('hidden'); });
   }
 
+  function initCheckout() {
+    var cart = readCart(), mailHref = '';
+    if (!cart.length) { $('#co-main').classList.add('hidden'); $('#co-empty').classList.remove('hidden'); return; }
+    var sub = cart.reduce(function (s, x) { return s + x.price * x.qty; }, 0);
+    function shipCost() { return sub >= 99 ? 0 : ($('#co-country').value === 'United States' ? 10 : null); }
+    function draw() {
+      var sc = shipCost(), intl = $('#co-country').value !== 'United States';
+      $('#co-items').innerHTML = cart.map(function (x) {
+        return '<div class="co-item"><div class="thumb">' + (x.photo ? '<img src="' + x.photo + '" alt="">' : apron(x.hex, x.dark, { mini: true })) + '<span class="qty-badge">' + x.qty + '</span></div>' +
+          '<div style="flex:1;min-width:0"><b>' + esc(x.name) + '</b><small>' + esc(x.colorName) + (x.text ? ' · Engraving: “' + esc(x.text) + '”' : '') + '</small></div><b>' + money(x.price * x.qty) + '</b></div>';
+      }).join('');
+      $('#co-sub').textContent = money(sub);
+      $('#co-ship').textContent = sc === 0 ? 'Free' : sc == null ? 'Quoted by email' : money(sc);
+      $('#co-ship-price').textContent = $('#co-ship').textContent;
+      $('#co-ship-eta').textContent = (intl ? '7–21' : '3–7') + ' business days after dispatch';
+      var total = money(sub + (sc || 0)) + (sc == null ? ' + shipping' : '');
+      $('#co-total').textContent = total; $('#co-btn-total').textContent = total;
+    }
+    $('#co-country').addEventListener('change', draw); draw();
+    function v(id) { return $('#' + id).value.trim(); }
+    $('#co-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var need = [['co-email', 'your email'], ['co-first', 'your first name'], ['co-last', 'your last name'], ['co-addr1', 'your address'], ['co-city', 'your city'], ['co-zip', 'your ZIP / postal code']];
+      var miss = need.filter(function (n) { return !v(n[0]); })[0], err = $('#co-error');
+      var msg = miss ? 'Please enter ' + miss[1] + '.' : !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v('co-email')) ? 'Please enter a valid email address.' : !$('#co-terms').checked ? 'Please agree to the Terms of Service to continue.' : '';
+      if (msg) { err.textContent = msg; err.classList.remove('hidden'); if (miss) $('#' + miss[0]).focus(); return; }
+      err.classList.add('hidden');
+      var d = new Date(), id = 'CLA-' + String(d.getFullYear()).slice(2) + ('0' + (d.getMonth() + 1)).slice(-2) + ('0' + d.getDate()).slice(-2) + '-' + Math.random().toString(36).slice(2, 6).toUpperCase();
+      var sc = shipCost();
+      var lines = ['NEW ORDER ' + id, '',
+        'Customer: ' + v('co-first') + ' ' + v('co-last') + (v('co-company') ? ' (' + v('co-company') + ')' : ''),
+        'Email: ' + v('co-email') + (v('co-phone') ? '   Phone: ' + v('co-phone') : ''), '',
+        'Ship to:', v('co-addr1') + (v('co-addr2') ? ', ' + v('co-addr2') : ''), v('co-city') + (v('co-state') ? ', ' + v('co-state') : '') + ' ' + v('co-zip'), $('#co-country').value, '',
+        'Items:'].concat(cart.map(function (x) { return '- ' + x.qty + ' x ' + x.name + ' (' + x.colorName + ')' + (x.text ? ' — engraving: "' + x.text + '"' : '') + ' — ' + money(x.price * x.qty); }))
+        .concat(['', 'Subtotal: ' + money(sub), 'Shipping: ' + (sc === 0 ? 'Free' : sc == null ? 'To be quoted' : money(sc)), 'Total: ' + money(sub + (sc || 0)) + (sc == null ? ' + shipping' : ''),
+          v('co-notes') ? '\nNotes: ' + v('co-notes') : '', $('#co-news').checked ? 'Newsletter: yes' : '', '', 'Please send me the secure payment link for this order.']);
+      mailHref = 'mailto:support@customleatherapron.com?subject=' + encodeURIComponent('Order ' + id + ' — ' + v('co-first') + ' ' + v('co-last')) + '&body=' + encodeURIComponent(lines.join('\n'));
+      location.href = mailHref;
+      $('#co-done-name').textContent = v('co-first'); $('#co-done-id').textContent = id; $('#co-done-email').textContent = v('co-email');
+      $('#co-main').classList.add('hidden'); $('#co-done').classList.remove('hidden'); window.scrollTo(0, 0);
+      writeCart([]);
+    });
+    $('#co-resend').addEventListener('click', function () { if (mailHref) location.href = mailHref; });
+  }
+
   // expose for the AI page
   window.CLA = { apronSVG: apron, addToCart: addToCart, icon: icon, money: money, esc: esc };
 
@@ -448,5 +492,6 @@
     if (page === 'customize') initProduct();
     if (page === 'cart') initCart();
     if (page === 'contact') initContact();
+    if (page === 'checkout') initCheckout();
   });
 })();
