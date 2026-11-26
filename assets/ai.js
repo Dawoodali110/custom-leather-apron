@@ -242,5 +242,7 @@ document.addEventListener('DOMContentLoaded', function () {
       '<span class="ex-img"><img src="assets/img/apron-' + p.img + '.jpg" alt="' + p.title + ' in black leather with tan straps and brass rivets" loading="lazy" width="520" height="780"></span>' +
       '<span class="ex-cap"><b>' + p.title + '</b><span>Use this design →</span></span></button>';
   }).join('');
+  var preName = new URLSearchParams(location.search).get('name');
+  if (preName) { st.d.text = preName.slice(0, 14); $('#personal').value = st.d.text; }
   draw();
 });

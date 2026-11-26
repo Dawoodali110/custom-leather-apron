@@ -203,11 +203,39 @@
   function photoOf(p, color) { return p.photos ? (p.photos[color] || p.photos[p.color]) : p.photo; }
   function card(p) {
     var c = COLORS[p.color];
+    var badge = p.tags.indexOf('best') !== -1 ? 'Bestseller' : (p.tags.indexOf('new') !== -1 ? 'New' : '');
+    var dots = (p.colors || [p.color]).map(function (k) { return '<i style="background:' + COLORS[k].hex + '" title="' + COLORS[k].name + '"></i>'; }).join('');
     return '<a class="card" href="product.html?id=' + p.id + '">' +
-      '<div class="img"><span class="heart">' + icon('heart', 22) + '</span>' + (photoOf(p, p.color) ? '<img class="card-photo" src="' + photoOf(p, p.color) + '" alt="' + esc(p.name) + '" loading="lazy">' : apron(c.hex, c.dark)) + '</div>' +
-      '<div><div class="name">' + esc(p.name) + '</div>' +
+      '<div class="img">' + (badge ? '<span class="badge-tag">' + badge + '</span>' : '') + '<span class="heart">' + icon('heart', 22) + '</span>' +
+      (photoOf(p, p.color) ? '<img class="card-photo" src="' + photoOf(p, p.color) + '" alt="' + esc(p.name) + '" loading="lazy">' : apron(c.hex, c.dark)) +
+      '<span class="card-cta">View options →</span></div>' +
+      '<div class="card-info"><div class="name">' + esc(p.name) + '</div>' +
       '<div class="meta"><span class="stars" aria-hidden="true">★★★★★</span>' + (p.reviews ? '(' + p.reviews + ')' : 'New') + '</div>' +
-      '<div class="price">' + money(p.price) + '</div></div></a>';
+      '<div class="card-bottom"><div class="price">' + money(p.price) + '</div><div class="dots" aria-label="' + (p.colors || [p.color]).length + ' colours">' + dots + '</div></div></div></a>';
+  }
+
+  function initPersonalize() {
+    var input = $('#pz-input'); if (!input) return;
+    var BG = { cognac: '#9A4A1F', dark: '#4A1C10', black: '#171412', olive: '#3F4A1E', burgundy: '#6E1712' };
+    var col = 'cognac', img = $('.pz-preview img'), patch = $('.pz-patch'), txt = $('#pz-text');
+    function draw() {
+      var t = input.value.trim().toUpperCase() || 'YOUR NAME';
+      txt.textContent = t; txt.style.fontSize = Math.min(4.4, 46 / Math.max(t.length, 6)) + 'cqw';
+      patch.style.backgroundColor = BG[col]; img.src = 'assets/img/ai-logo-' + col + '.webp';
+      $('#pz-go').href = 'design-ai.html' + (input.value.trim() ? '?name=' + encodeURIComponent(input.value.trim()) : '');
+    }
+    input.addEventListener('input', draw);
+    $$('[data-pz]').forEach(function (b) { b.addEventListener('click', function () {
+      col = b.getAttribute('data-pz'); $$('[data-pz]').forEach(function (x) { x.classList.toggle('on', x === b); x.setAttribute('aria-pressed', x === b); }); draw(); }); });
+    draw();
+  }
+
+  function initReveal() {
+    var els = $$('.reveal'); if (!els.length) return;
+    if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) { els.forEach(function (e) { e.classList.add('in'); }); return; }
+    document.documentElement.classList.add('has-reveal');
+    var io = new IntersectionObserver(function (entries) { entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }); }, { rootMargin: '0px 0px -8% 0px' });
+    els.forEach(function (e) { io.observe(e); });
   }
 
   // ---------- Pages ----------
@@ -414,7 +442,8 @@
   document.addEventListener('DOMContentLoaded', function () {
     renderHeader(); renderFooter(); updateBadge();
     var page = document.body.getAttribute('data-page');
-    if (page === 'home') initHome();
+    if (page === 'home') { initHome(); initPersonalize(); }
+    initReveal();
     if (page === 'shop') initShop();
     if (page === 'customize') initProduct();
     if (page === 'cart') initCart();
